@@ -5,11 +5,23 @@ Rails.application.routes.draw do
 
  
   namespace :public do
-    resources :items
+  	resources :homes, only: [:top, :about]
+  	resources :customers, only: [:index, :show, :new, :edit, :create, :update, :destroy, :check, :withdrow]
+    resources :items, only: [:index, :show]
+    resources :orders, only: [:index, :show, :new, :confirm, :thanks, :create]
+    resources :deliveries, only: [:index, :edit, :update, :create, :destroy]
+    resources :cart_items, only: [:index, :create, :destroy, :update, :destroy_all]
+    resources :order_items, only: [:index]
   end
 
   namespace :admin do
-    resources :items
+  	resources :homes, only: [:index]
+  	resources :customers, only: [:index, :edit, :update]
+  	resources :admins, only: [:show]
+    resources :items, only: [:index, :new, :show, :edit, :create, :update]
+    resources :orders, only: [:index, :show, :create, :update]
+    resources :genres, only: [:index, :edit, :create, :update]
+    resources :order_items, only: [:index, :create, :update]
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
