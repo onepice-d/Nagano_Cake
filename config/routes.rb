@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   devise_for :customers
   devise_for :admins
 
-
+ 
   namespace :public do
     get "/top"=> "home#top"
     root 'home#top'
