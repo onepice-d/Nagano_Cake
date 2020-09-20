@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   devise_for :customers
   devise_for :admins
 
- 
+
   namespace :public do
   	resources :homes, only: [:top, :about]
   	resources :customers, only: [:index, :show, :new, :edit, :create, :update, :destroy, :check, :withdrow]
