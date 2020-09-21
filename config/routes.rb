@@ -1,13 +1,22 @@
 Rails.application.routes.draw do
 
-  devise_for :customers
-  devise_for :admins
+#認証機能に関して
+  devise_for :admins, controllers: {
+    registrations: 'admins/registrations',
+    sessions: 'admins/sessions',
+    passwords: 'admins/passwords'
+  }
+  devise_for :customers, controllers: {
+    registrations: 'publics/registrations',
+    sessions: 'publics/sessions',
+    passwords: 'publics/passwords'
+  }
 
 
   namespace :public do
-    get "/top"=> "home#top"
+    get "/"=> "public/homes#top"
     root 'home#top'
-    get 'home/about' => 'home#about'
+    get 'home/about' => 'public/homes#about'
   	resources :customers, only: [:index, :show, :new, :edit, :create, :update, :destroy, :check, :withdrow]
     resources :items, only: [:index, :show]
     resources :orders, only: [:index, :show, :new, :confirm, :thanks, :create]
@@ -17,7 +26,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-  	get "/top"=> "home#top"
+  	get "/top"=> "admin/homes#top"
   	resources :customers, only: [:index, :edit, :update]
   	resources :admins, only: [:show]
     resources :items, only: [:index, :new, :show, :edit, :create, :update]
