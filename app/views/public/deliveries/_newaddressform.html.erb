@@ -1,0 +1,17 @@
+<%= form_for(@delivery) do |f| %>
+    <table class="table table-bordered">
+      <tr>
+	    <td>郵便番号</td>
+	    <td><%= f.text_field :postal_code, autofocus: true %></td>
+	  </tr>
+	  <tr>
+	    <td>住所</td>
+	    <td><%= f.text_field :address, autofocus: true, style: "width: 80%;" %></td>
+	  </tr>
+	  <tr>
+	    <td>宛名</td>
+	    <td><%= f.text_field :name, autofocus: true %></td>
+	  </tr>
+	  <tr>
+	    
+    </table>

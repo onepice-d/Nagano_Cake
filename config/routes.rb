@@ -1,7 +1,16 @@
 Rails.application.routes.draw do
 
-  devise_for :customers
-  devise_for :admins
+#認証機能に関して
+  devise_for :admins, controllers: {
+    registrations: 'admins/registrations',
+    sessions: 'admins/sessions',
+    passwords: 'admins/passwords'
+  }
+  devise_for :customers, controllers: {
+    registrations: 'publics/registrations',
+    sessions: 'publics/sessions',
+    passwords: 'publics/passwords'
+  }
 
 
   namespace :public do
@@ -16,8 +25,8 @@ Rails.application.routes.draw do
     resources :order_items, only: [:index]
   end
 
-  namespace :admins do
-  	get "/top"=> "homes#top"
+  namespace :admin do
+  	get "/top"=> "admin/homes#top"
   	resources :customers, only: [:index, :edit, :update]
   	resources :admins, only: [:show]
     resources :items, only: [:index, :new, :show, :edit, :create, :update]
