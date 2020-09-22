@@ -25,7 +25,6 @@
             <li><%= link_to 'カート', public_cart_items_path, class: 'glyphicon glyphicon-book books' %></li>
             <li><%= link_to 'ログアウト', destroy_customerr_session_path, method: :delete, class: 'glyphicon glyphicon-log-out logout' %></li>
             <% elsif admin_signed_in? %>
-            end %>
             <li><%= link_to '商品一覧', admin_items_path, class: 'glyphicon glyphicon-home home' %></li>
             <li><%= link_to '会員一覧', admin_customers_path, class: 'glyphicon glyphicon-link about' %></li>
             <li><%= link_to '注文一覧', admin_order_items_path, class: 'glyphicon glyphicon-edit sign_up' %></li>
