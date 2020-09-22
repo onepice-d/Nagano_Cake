@@ -20,10 +20,10 @@
           <ul class="nav navbar-nav navbar-right">
              <!--if文でadminのサインイン、customerサインインとアウト時の表示を変更-->
             <% if customer_signed_in? %>
-            <li><%= link_to 'マイページ', customerr_path(current_user), class: 'glyphicon glyphicon-home home' %></li>
+            <li><%= link_to 'マイページ', public_customer_path(current_customer), class: 'glyphicon glyphicon-home home' %></li>
             <li><%= link_to '商品一覧', public_items_path, class: 'glyphicon glyphicon-user users' %></li>
             <li><%= link_to 'カート', public_cart_items_path, class: 'glyphicon glyphicon-book books' %></li>
-            <li><%= link_to 'ログアウト', destroy_customerr_session_path, method: :delete, class: 'glyphicon glyphicon-log-out logout' %></li>
+            <li><%= link_to 'ログアウト', destroy_customer_session_path, method: :delete, class: 'glyphicon glyphicon-log-out logout' %></li>
             <% elsif admin_signed_in? %>
             <li><%= link_to '商品一覧', admin_items_path, class: 'glyphicon glyphicon-home home' %></li>
             <li><%= link_to '会員一覧', admin_customers_path, class: 'glyphicon glyphicon-link about' %></li>
