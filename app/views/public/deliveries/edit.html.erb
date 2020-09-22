@@ -1,0 +1,15 @@
+<!-- 配送先編集画面 -->
+
+<div class="edit-container" style="width:50%; margin: 20px auto;">
+
+  <!-- 編集フォーム見出し -->
+  <h3>配送先編集</h3>
+
+  <!-- 編集フォーム -->
+  <%= render "deliveris/newaddressform", delivery: @delivery %>
+
+    <!-- 編集確定ボタン -->
+    <%= f.submit "編集する", class:"btn btn-primary btn-md" %>
+  <% end %>
+
+</div>

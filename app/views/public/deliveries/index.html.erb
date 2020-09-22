@@ -1,0 +1,43 @@
+<!-- 配送先一覧・登録画面 -->
+
+<div class="index-container" style="width:60%; margin: 20px auto;">
+
+  <!-- 配送先登録フォーム -->
+      <h5>配送先/一覧</h5>
+      	<%= render "deliveris/newaddressform", delivery: @delivery %>
+	     <%= f.submit "登録する", class:"btn btn-primary btn-md" %>
+      <% end %>
+
+  <!-- 配送先一覧/編集/削除/ -->
+  <table class="table table-bordered" style="margin-top: 20px;">
+  	<thead>
+	  <tr>
+	    <th>郵便番号</th>
+		<th>住所</th>
+		<th>宛名</th>
+		<th></th>
+	  </tr>
+    </thead>
+	<% @deliveries.each do |delivery| %>
+	  <tbody>
+	    <tr>
+		  <td>
+			<%= delivery.postal_code %>
+		  </td>
+		  <td>
+			<%= delivery.address %>
+		  </td>
+		  <td>
+			<%= delivery.name %>
+		  </td>
+		  <td>
+		  <td>
+			<%= link_to "編集する", edit_delivery_path(delivery), class:"btn btn-primary btn-md" %>
+			<%= link_to "削除する", delivery_path(delivery), class:"btn btn-danger btn-md", method: :delete %>
+		  </td>
+	    </tr>
+	  </tbody>
+	<% end %>
+  </table>
+
+</div>
