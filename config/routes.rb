@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     get "/top"=> "home#top"
     root 'home#top'
     get 'home/about' => 'home#about'
+    post 'order/confirm'=> "order#confirm"
+    get 'order/thanks'=> "order#thanks"
   	resources :customers, only: [:index, :show, :new, :edit, :create, :update, :destroy, :check, :withdrow]
     resources :items, only: [:index, :show]
     resources :orders, only: [:index, :show, :new, :confirm, :thanks, :create]
