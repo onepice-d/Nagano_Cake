@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   namespace :public do
     get "/top"=> "homes#top"
-    root 'homes#top'
+    root to: 'homes#top'
     get 'homes/about' => 'homes#about'
   	resources :customers, only: [:index, :show, :new, :edit, :create, :update, :destroy, :check, :withdrow]
     resources :items, only: [:index, :show]
@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
   	get "/top"=> "admin/homes#top"
+    root to: 'homes#top'
   	resources :customers, only: [:index, :edit, :update]
   	resources :admins, only: [:show]
     resources :items, only: [:index, :new, :show, :edit, :create, :update]
