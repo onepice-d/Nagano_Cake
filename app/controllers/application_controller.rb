@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   		case resource
   			when Admin
     			admin_top_path
+    		when Customer
+    			public_items_path
 	end
 end
 end
