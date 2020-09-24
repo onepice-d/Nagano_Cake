@@ -1,9 +1,10 @@
-<!--renderはエラー出るので修正する -->
 
+<%= render "public/genres/genre", genre: @genres %>
 
 ようこそ、NaganoCakeへ！<br>
 このサイトは、ケーキ販売のECサイトになります。<br>
 会員でない方も商品の閲覧はできますが、<br>
 購入には会員登録が必要になります。<br>
 
-<h2>オススメ商品<h2>
+<h2>オススメ商品</h2>
+<%= link_to "もっと見る", public_items_path %>

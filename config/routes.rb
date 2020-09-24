@@ -19,7 +19,11 @@ Rails.application.routes.draw do
     get 'homes/about' => 'homes#about'
   	resources :customers, only: [:index, :show, :new, :edit, :create, :update, :destroy, :check, :withdrow]
     resources :items, only: [:index, :show]
-    resources :orders, only: [:index, :show, :new, :confirm, :thanks, :create]
+    resources :orders, only: [:index, :show, :new, :confirm, :thanks, :create] do
+          collection do
+      post :confirm
+    end
+  end
     resources :deliveries, only: [:index, :edit, :update, :create, :destroy]
     resources :cart_items, only: [:index, :create, :destroy, :update, :destroy_all]
     resources :order_items, only: [:index]
