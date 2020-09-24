@@ -1,1 +1,15 @@
-ジャンル編集
+<h4>ジャンル編集</h4>
+
+<div class="col-xs-5 ">
+
+<%= form_for(@genre, url: admin_genre_path(@genre)) do |f| %>
+	<div class="field row">
+		<%= f.label :ジャンル %>
+		<%= f.text_field :name %>
+		<%= f.radio_button :is_active, true, checked: true %>
+        <%= f.label :name, "有効" %>
+        <%= f.radio_button :is_active, false %>
+        <%= f.label :name, "無効" %>
+		<%= f.submit :変更を保存する %>
+	</div>
+<% end %>
