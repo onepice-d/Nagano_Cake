@@ -15,9 +15,12 @@ Rails.application.routes.draw do
 
   namespace :public do
     get "/top"=> "homes#top"
-    root to: 'homes#top'
+    root to: 'homes#top' 
     get 'homes/about' => 'homes#about'
-  	resources :customers, only: [:index, :show, :new, :edit, :create, :update, :destroy, :check, :withdrow]
+  	resources :customers, only: [:index, :show, :new, :edit, :create, :update, :destroy]
+      get "customers/:id/check" => "customers#check"
+      patch "customers/:id/check" => "customers#withdrow"
+      #退会ページのルート
     resources :items, only: [:index, :show]
     resources :orders, only: [:index, :show, :new, :confirm, :thanks, :create]
     resources :deliveries, only: [:index, :edit, :update, :create, :destroy]
