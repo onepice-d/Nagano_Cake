@@ -1,15 +1,24 @@
-<h1>商品新規登録</h1>
 
-<%= form_for(@item, url: new_admin_item_path) do |f| %>
+<h3>商品新規登録</h3>
+
+<%= form_for [:admin, @item] do |f| %>
 
 <%= f.attachment_field :image %>
 
-  <h4>商品名</h4>
+  <h5>商品名</h5>
     <%= f.text_field :name %>
 
-  <h4>商品説明</h4>
+  <h5>商品説明</h5>
     <%= f.text_area :introduction %>
 
-    <%= f.submit %>
+  <h5>税抜価格</h5>
+    <%= f.text_field :price %>円
 
-   <% end %>
+  <h5>ジャンル</h5>
+    <%=f.collection_select :genre_id, Genre.all, :id, :name, { prompt: '選択してください' } %>
+
+  <h5>販売ステータス</h5>
+    <%= f.select :is_active, [["販売中", "true"], ["売切中","false"]], include_blank: "選択して下さい" %>
+
+     <%= f.submit '新規登録',class: "btn-sm btn-primary edit_book_#{@item.id}" %>
+    <% end %>

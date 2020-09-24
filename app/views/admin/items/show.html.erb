@@ -1,0 +1,19 @@
+<h2>商品詳細画面</h2>
+
+<%= attachment_image_tag(@item, :image, :fill, 200, 200, fallback: "no-image-mini.jpg") %>
+
+<table>
+	<tr><th>商品名</th><td><%= @item.name %></td></tr>
+	<tr><th>商品説明</th><td><%= @item.introduction %></td></tr>
+	<tr><th>ジャンル</th><td><%= @genre.name %></td></tr>
+	<tr><th>税込価格(税抜価格)</th><td><%= @item.price * 1.08 %> (<%=@item.price %>)円</td></tr>
+    <tr><th>販売ステータス</th>
+    	<td>
+    		<% if @item.is_active == true %>
+    			<%= "販売中" %>
+    			<% else %>
+    			<%= "売切中" %>
+    			<% end %>
+    		</td></tr>
+
+　　　<%= link_to "編集する", edit_admin_item_path(@item), class: "btn-sm btn-success edit_book_#{@item.id}"%>
