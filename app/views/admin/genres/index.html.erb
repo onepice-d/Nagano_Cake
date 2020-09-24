@@ -7,7 +7,10 @@
 		<%= f.label :ジャンル %>
 		<%= f.text_field :name %>
 	</div>
-
+		<%= f.radio_button :is_active, true, checked: true %>
+        <%= f.label :name, "有効" %>
+        <%= f.radio_button :is_active, false %>
+        <%= f.label :name, "無効" %>
 	<div class="actions">
 	<%= f.submit :追加 %>
 	</div>
@@ -27,7 +30,14 @@
 	<% @genres.each do |genre| %>
 		<tr>
 			<td><%= genre.name %></td>
-			<td><%= link_to 'Edit', edit_admin_genre_path(genre), class: "edit_#{genre.id}" %></td>
+			<td>
+				<% if genre.is_active == true %>
+				有効
+				<% else %>
+				無効
+				<% end %>
+			</td>
+			<td><%= link_to '編集する', edit_admin_genre_path(genre), class: "edit_#{genre.id}" %></td>
 		</tr>
 	<% end %>
 	</tbody>
