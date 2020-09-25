@@ -14,6 +14,12 @@ class Admin::GenresController < ApplicationController
 		end
 	end
 
+    def show
+      @genre = Genre.find(params[:id])
+      @genres = Genre.where(validity: true)
+      @items = @genre.items.page(params[:page]).per(9)
+    end
+
 	def edit
 		@genre = Genre.find(params[:id])
 	end
