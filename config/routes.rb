@@ -22,7 +22,11 @@ Rails.application.routes.draw do
       patch "customers/:id/check" => "customers#withdrow"
       #退会ページのルート
     resources :items, only: [:index, :show]
-    resources :orders, only: [:index, :show, :new, :confirm, :thanks, :create]
+    resources :orders, only: [:index, :show, :new, :confirm, :thanks, :create] do
+          collection do
+      post :confirm
+    end
+  end
     resources :deliveries, only: [:index, :edit, :update, :create, :destroy]
     resources :cart_items, only: [:index, :create, :destroy, :update, :destroy_all]
     resources :order_items, only: [:index]
