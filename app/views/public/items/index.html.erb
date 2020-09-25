@@ -1,32 +1,18 @@
 <div class="container">
   <div class="row">
 	<div class="col-xs-3">
-		<!-- 本当はrenderから飛ばしてきます -->
-        <table>
-	      <tr>
-		   <th>ジャンル名</th>
-	      </tr>
-
-	      <tr>
-		    <td>ケーキ</td>
-	      </tr>
-
-	      <tr>
-		    <td>焼き菓子</td>
-	      </tr>
-
-	      <tr>
-		    <td>プリン</td>
-	      </tr>
-
-	      <tr>
-		    <td>キャンディ</td>
-	      </tr>
-	  </table>
-　　　　<!-- ここまで -->
+	</div>
 
       <div class="col-xs-9">
-	    <h1>商品一覧</h1>
+
+	    <h1>商品一覧</h1><%= @items.count %>
+	    <% @items.each do |item| %>
+	      <%= link_to public_item_path(item) do %>
+	        <%= attachment_image_tag(item, :image, :fill, 200, 200, fallback: "no-image-mini.jpg") %>
+	        <%= item.name %>
+	        <%= item.price %>
+	        <% end %>
+	    <% end %>
 
 	</div>
   </div>

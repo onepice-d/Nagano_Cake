@@ -1,33 +1,24 @@
 <div class="container">
   <div class="row">
 	<div class="col-xs-3">
-		<!-- 本当はrenderから飛ばしてきます -->
-        <table>
-	      <tr>
-		   <th>ジャンル名</th>
-	      </tr>
 
-	      <tr>
-		    <td>ケーキ</td>
-	      </tr>
-
-	      <tr>
-		    <td>焼き菓子</td>
-	      </tr>
-
-	      <tr>
-		    <td>プリン</td>
-	      </tr>
-
-	      <tr>
-		    <td>キャンディ</td>
-	      </tr>
-	  </table>
-	</div>
-　　　　<!-- ここまで -->
+    </div>
 
       <div class="col-xs-9">
-　　　　　<h1>商品詳細ページ</h1>
+　　　　　<h4>商品詳細ページ</h4>
+           <%= attachment_image_tag(@item, :image, :fill, 200, 200, fallback: "no-image-mini.jpg") %>
+           <%= @item.name %>
+           <%= @item.introduction %>
+           ¥<%= @item.price * 1.08 %>(税込)
+
+          <%= form_with(model: [@item, @cart], local: true, url: {controller: 'cart_items', action: 'create'}) do |f| %>
+            <%= f.label :ご購入個数 %>
+            <%= f.number_field :quantity, value: 1 ,min:1, max:99 %>個
+            <%= f.hidden_field :item_id, value: @item.id  %>
+            <%= f.submit "カートに入れる", class: "btn btn-danger" %>
+          <% end %>
+
+
       </div>
   </div>
 </div>

@@ -1,21 +1,20 @@
 class Public::CartItemsController < ApplicationController
 	before_action :authenticate_customer!
-	before_action :customer_is_deleted
 
 	def index
 		@cart_items = current_customer.cart_items.all
   end
 
 	def create
-    	@cart_item = current_customer.cart_items.build(cart_item_params)
-    	@current_item = CartItem.find_by(items_id: @cart_item.item_id,customer_id: @cart_item.customer_id)
+    	@cart_item = CartItem.new(item_params)
+    	@current_item = CartItem.find_by(item_id: @cart_item.item_id,customer_id: @cart_item.customer_id)
     	# カートに同じ商品がなければ新規追加、あれば既存のデータと合算
     	if @current_item.nil?
      	 if @cart_item.save
      	   flash[:success] = 'カートに商品が追加されました！'
-     	   redirect_to publics_cart_items_path
+     	   redirect_to public_cart_items_path
      	 else
-     	   @cart_items = @customer.cart_items.all
+     	   @cart_items = current_customer.cart_items.all
      	   render 'index'
      	   flash[:danger] = 'カートに商品を追加できませんでした。'
      	 end
@@ -51,10 +50,4 @@ class Public::CartItemsController < ApplicationController
       params.require(:cart_item).permit(:customer_id, :item_id, :amount)
     end
 
-    #退会済みユーザーへの対応
-    def customer_is_deleted
-      if customer_signed_in? && current_customer.is_deleted?
-         redirect_to pubric_root_path
-      end
-    end
 end
