@@ -8,6 +8,7 @@ class Public::ItemsController < ApplicationController
 		@item = Item.find(params[:id])
 		@genre = Genre.find(params[:id])
 		@cart = @item.cart_items.build
+		@genres = Genre.all
 	end
 
 	private

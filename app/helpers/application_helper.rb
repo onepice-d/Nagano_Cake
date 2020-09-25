@@ -1,7 +1,7 @@
 module ApplicationHelper
 
- def price_include_tax(price)
-   price = price * 1.08
-    "#{price.floor}円"
+ def price_include_tax(tax_price)
+   tax_price = price * 1.08
+    "#{tax_price.floor}円"
   end
 end

@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     resources :deliveries, only: [:index, :edit, :update, :create, :destroy]
     resources :cart_items, only: [:index, :create, :destroy, :update, :destroy_all]
     resources :order_items, only: [:index]
+    resources :genres, only: [:show]
   end
 
   namespace :admin do
