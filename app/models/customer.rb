@@ -24,11 +24,10 @@ validates :address, presence: true
 validates :telephone_number, numericality: { only_integer: true }
 # 電話番号を数値だけ入力可、
 
-    enum is_deleted: {Available: false, Invalid: true}
-    #有効会員はfalse、退会済み会員は
+
 
     def active_for_authentication?
-        super && (self.is_deleted === "Available")
+        super && (self.is_deleted == false)
     end
     #is_deletedが無効の場合は有効会員(ログイン可能)
 

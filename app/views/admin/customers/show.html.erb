@@ -1,22 +1,25 @@
 <div class="container">
-  	<div class="row">		
-		<h2>マイページ</h2>
-	</div>
-		
 	<div class="row">	
-		<h3>登録情報</h3>
-		<%= link_to  edit_public_customer_path, class:"btn btn-primary" do %>
-		  <i class="fa fa-arrow-left"></i>
-		  <span>編集する</span>
-		<% end %>
-		
-		<%= link_to  edit_customer_registration_path, class:"btn btn-primary"  do %>
-		  <i class="fa fa-arrow-left"></i>
-		  <span>パスワードを変更する</span>
-		<% end %>
-		<br>
-		
-		<table class="table table-striped">
+		<h2><%= @customer.last_name %><%= @customer.first_name %>の会員詳細</h2>
+	</div>
+
+	<div class="row">	
+		<table class="table table-borderless">
+			<tr>
+				<th>顧客ID</th>
+				<th><%= @customer.id %></th>
+				<th>
+					<% if @customer.is_deleted == false %>
+					<div class="bg-info d-inline text-white p-1 ml-3 rounded">
+					有効会員
+					</div>
+					<% else %>
+					<div class="bg-danger d-inline text-white p-1 ml-3 rounded">
+					退会済み
+					</div>
+					<% end %>
+				</th>
+			</tr>
 			<tr>
 				<th>氏名</th>
 				<th><%= @customer.last_name %><%= @customer.first_name %></th>
@@ -43,17 +46,14 @@
 			</tr>
 		</table>
 		
-		<h4>配送先</h4>
-		<%= link_to  public_deliveries_path, class:"btn btn-primary"  do %>
+		<%= link_to  edit_admin_customer_path, class:"btn btn-primary" do %>
 		  <i class="fa fa-arrow-left"></i>
-		  <span>一覧を見る</span>
+		  <span>編集する</span>
 		<% end %>
 		
-		
-		<h4>注文履歴</h4>
-		<%= link_to   public_orders_path, class:"btn btn-primary"  do %>
+		<%= link_to   admin_order_items_path, class:"btn btn-primary"  do %>
 		  <i class="fa fa-arrow-left"></i>
-		  <span>一覧を見る</span>
+		  <span>注文履歴一覧を見る</span>
 		<% end %>
 	</div>
-</div>	
+</div>
