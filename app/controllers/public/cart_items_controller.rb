@@ -1,53 +1,67 @@
 class Public::CartItemsController < ApplicationController
-	before_action :authenticate_customer!
+	#ログインユーザーのみ閲覧可
+  before_action :authenticate_customer!, only: [:index, :update, :destroy]
 
-	def index
-		@cart_items = current_customer.cart_items.all
+
+  def index
+    @cart_items = current_customer.cart_items
+    @total_price = @cart_items.sum{|c| c.item.price * c.amount }
   end
 
-	def create
-    	@cart_item = CartItem.new(item_params)
-    	@current_item = CartItem.find_by(item_id: @cart_item.item_id,customer_id: @cart_item.customer_id)
-    	# カートに同じ商品がなければ新規追加、あれば既存のデータと合算
-    	if @current_item.nil?
-     	 if @cart_item.save
-     	   flash[:success] = 'カートに商品が追加されました！'
-     	   redirect_to public_cart_items_path
-     	 else
-     	   @cart_items = current_customer.cart_items.all
-     	   render 'index'
-     	   flash[:danger] = 'カートに商品を追加できませんでした。'
-     	 end
-   	 	else
-      		@current_item.amount += params[:amount].to_i
-      		@current_item.update(cart_item_params)
-      		redirect_to public_cart_items_path
-	 	end
+ def create
+  if current_customer.cart_items.count >= 1 #カート内に商品があるか？
+    if nil != current_customer.cart_items.find_by(item_id: params[:cart_item][:item_id]) #カートに入れた商品はすでにカートに追加済か？
+       @cart_item_u = current_customer.cart_items.find_by(item_id: params[:cart_item][:item_id]) #カート内のすでにある商品の情報取得
+       @cart_item_u.amount += params[:cart_item][:amount].to_i #既にある情報に個数を合算
+       @cart_item_u.update(amount: @cart_item_u.amount) #情報の更新　個数カラムのみ
+       redirect_to public_cart_items_path #カートページ遷移
+     else
+        @cart_item = CartItem.new(cart_item_params) #新しくカートの作成
+      @cart_item.customer_id = current_customer.id #誰のカートか紐付け
+      if @cart_item.save #情報を保存できるか？
+         redirect_to public_cart_items_path #カートページ遷移
+      else
+        @amount = Item.count #商品の数をカウント
+        @genres = Genre.where(valid_invalid_status: 0) #有効、無効ステータスが0のものを見つける
+        render 'index' #indexアクションを呼び出す
     end
+  end
 
-	def destroy
-		@cart_item = CartItem.find(params[:id])
-  		@cart_item.destroy
-    	redirect_to public_cart_items_path
-    	flash[:info] = 'カートの商品を取り消しました。'
-	end
+  else
+    @cart_item = CartItem.new(cart_item_params)#新しくカートの作成
+    @cart_item.customer_id = current_customer.id#誰のカートか紐付け
+    if @cart_item.save#情報を保存できるか？
+       redirect_to public_cart_items_path#カートページ遷移
+    else
+      @amount = Item.count#商品の数をカウント
+      render 'index'#indexアクションを呼び出す
+    end
+  end
+end
 
-	def destroy_all
-		@customer.cart_items.destroy_all
-    	redirect_to public_cart_items_path
-    	flash[:info] = 'カートを空にしました。'
-	end
+  def update
+    @cart_item = CartItem.find(params[:id])
+    @cart_item.update(cart_item_params)
+    redirect_to public_cart_items_path
+  end
 
-	def update
-		if @cart_item.update(cart_item_params)
-      		redirect_to cart_items_path
-      		flash[:success] = 'カート内の商品を更新しました！'
-    	end
-	end
+  #商品を空にする
+  def destroy
+    @cart_item = CartItem.find(params[:id])
+    @cart_item.destroy
+    redirect_to public_cart_items_path
+  end
+
+  #カートを空にする
+  def destroy_all
+    @cart_items = current_customer.cart_items
+    @cart_items.destroy_all
+    redirect_to public_cart_items_path
+  end
 
   private
-    def item_params
-      params.require(:cart_item).permit(:customer_id, :item_id, :amount)
+    def cart_item_params
+      params.require(:cart_item).permit(:user_id, :item_id, :amount)
     end
 
 end

@@ -1,10 +1,9 @@
 class Public::DeliveriesController < ApplicationController
-	before_action :authenticate_user!
-	before_action :customer_is_deleted
+	before_action :authenticate_customer!
 
 	def index
 		@customer = current_customer
-        @deliveries = @customer.deliveries
+        @deliveries = Delivery.all
         @delivery = Delivery.new
 	end
 
@@ -12,12 +11,12 @@ class Public::DeliveriesController < ApplicationController
 		@delivery = Delivery.find(params[:id])
 	end
 
-	def cteate
+	def create
 		@delivery = Delivery.new(delivery_params)
 		@delivery.customer_id = current_customer.id
 		if @delivery.save
 			flash[:success] = "登録に成功しました"
-           redirect_to public_delivery_path
+           redirect_to public_deliveries_path
            else
             @customer = current_customer
             @deliveries = @customer.delivery.all
@@ -29,6 +28,7 @@ class Public::DeliveriesController < ApplicationController
 
 	def update
 		@delivery = Delivery.find(params[:id])
+        customer = current_customer.id
 
         if @delivery.update(delivery_params)
             redirect_to public_deliveries_path
@@ -40,6 +40,7 @@ class Public::DeliveriesController < ApplicationController
 	end
 
 	def destroy
+        @customer = current_customer
 		@delivery = Delivery.find(params[:id])
         @delivery.destroy
         flash[:success] = "削除に成功しました"
@@ -51,10 +52,6 @@ class Public::DeliveriesController < ApplicationController
         params.require(:delivery).permit(:name, :postal_code, :address, :customer_id)
     end
 
-    def user_is_deleted
-      if current_customer.is_deleted?
-        redirect_to root_path
-      end
-    end
+
 
 end

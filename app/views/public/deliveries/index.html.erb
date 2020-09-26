@@ -4,8 +4,22 @@
 
   <!-- 配送先登録フォーム -->
       <h5>配送先/一覧</h5>
-      	<%= render "deliveris/newaddressform", delivery: @delivery %>
-	     <%= f.submit "登録する", class:"btn btn-primary btn-md" %>
+      	<%= form_for @delivery, url:public_deliveries_path do |f| %>
+    <table class="table table-bordered">
+      <tr>
+	    <th>郵便番号</th>
+	    <td><%= f.text_field :postal_code, autofocus: true %></td>
+	  </tr>
+	  <tr>
+	    <th>住所</th>
+	    <td><%= f.text_field :address, autofocus: true, style: "width: 80%;" %></td>
+	  </tr>
+	  <tr>
+	    <th>宛名</th>
+	    <td><%= f.text_field :name, autofocus: true %></td>
+	  </tr>
+    </table>
+    <%= f.submit "登録する", class:"btn btn-primary btn-md" %>
       <% end %>
 
   <!-- 配送先一覧/編集/削除/ -->
@@ -30,10 +44,11 @@
 		  <td>
 			<%= delivery.name %>
 		  </td>
+		  
 		  <td>
-		  <td>
-			<%= link_to "編集する", edit_delivery_path(delivery), class:"btn btn-primary btn-md" %>
-			<%= link_to "削除する", delivery_path(delivery), class:"btn btn-danger btn-md", method: :delete %>
+			<%= link_to "編集する", edit_public_delivery_path(delivery), class:"btn btn-primary btn-md" %></td>
+		<td>
+			<%= link_to "削除する", public_delivery_path(delivery), method: :delete, class:"btn btn-danger" %>
 		  </td>
 	    </tr>
 	  </tbody>

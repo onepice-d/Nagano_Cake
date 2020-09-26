@@ -18,9 +18,9 @@
            <%= @item.introduction %>
            <h4>¥<%= @item.price * 1.08 %>(税込)</h4>
 
-          <%= form_with(model: [@item, @cart], local: true, url: {controller: 'cart_items', action: 'create'}) do |f| %>
+          <<%= form_for(@cart_item, url: public_cart_items_path) do |f|  %>
             <%= f.label :ご購入個数 %>
-            <%= f.number_field :quantity, value: 1 ,min:1, max:99 %>個
+            <%= f.number_field :amount, value: 1 ,min:1, max:99 %>個
             <%= f.hidden_field :item_id, value: @item.id  %>
             <%= f.submit "カートに入れる", class: "btn btn-primary" %>
             <% end %>
