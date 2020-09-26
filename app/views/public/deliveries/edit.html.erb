@@ -6,10 +6,25 @@
   <h3>配送先編集</h3>
 
   <!-- 編集フォーム -->
-  <%= render "deliveris/newaddressform", delivery: @delivery %>
+  <%= form_for @delivery, url:public_delivery_path do |f| %>
+    <table class="table table-bordered">
+      <tr>
+	    <th>郵便番号</th>
+	    <td><%= f.text_field :postal_code, autofocus: true %></td>
+	  </tr>
+	  <tr>
+	    <th>住所</th>
+	    <td><%= f.text_field :address, autofocus: true, style: "width: 80%;" %></td>
+	  </tr>
+	  <tr>
+	    <th>宛名</th>
+	    <td><%= f.text_field :name, autofocus: true %></td>
+	  </tr>
+	    
+    </table>
+    <%= f.submit "更新する", class:"btn btn-primary btn-md" %>
+      <% end %>
 
-    <!-- 編集確定ボタン -->
-    <%= f.submit "編集する", class:"btn btn-primary btn-md" %>
-  <% end %>
 
+    
 </div>
