@@ -1,4 +1,4 @@
-<%= form_for(@delivery) do |f| %>
+<%= form_for (@delivery) do |f| %>
     <table class="table table-bordered">
       <tr>
 	    <td>郵便番号</td>
@@ -12,6 +12,7 @@
 	    <td>宛名</td>
 	    <td><%= f.text_field :name, autofocus: true %></td>
 	  </tr>
-	  <tr>
 	    
     </table>
+    <%= f.submit "登録する", class:"btn btn-primary btn-md" %>
+      <% end %>

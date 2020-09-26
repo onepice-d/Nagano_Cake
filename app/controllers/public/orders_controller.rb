@@ -1,6 +1,8 @@
 class Public::OrdersController < ApplicationController
+  before_action :authenticate_customer!
 	def new
-		@order = Order.new
+		@order = Order.new(customer_id: current_customer)
+    @deliveries = Delivery.where(customer_id: current_customer)
 	end
 
 	def create
@@ -53,7 +55,6 @@ class Public::OrdersController < ApplicationController
     end
   end
 
-	end
 
 	def confirm
 	end
@@ -85,4 +86,11 @@ class Public::OrdersController < ApplicationController
       )
   end
 
+  private
+  def orders
+      params.require(:order).permit(:customer_id, :shipping_coat, :total_price, :payment_methods, :postal_code, :address, :name, :status)
+  end
+
 end
+
+
