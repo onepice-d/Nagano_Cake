@@ -1,24 +1,33 @@
 <div class="container">
   <div class="row">
-	<div class="col-xs-3">
-
+	<div class="col-xs-4">
+    <%= render "public/genres/genre", genre: @genres %>
     </div>
 
-      <div class="col-xs-9">
-　　　　　<h4>商品詳細ページ</h4>
-           <%= attachment_image_tag(@item, :image, :fill, 200, 200, fallback: "no-image-mini.jpg") %>
-           <%= @item.name %>
+      <div class="col-xs-8">
+        <div class="col-lg-10 space">
+        <div class="container">
+        <div class="row">
+          <h4>商品詳細ページ</h4>
+        <div class="col-lg-4 offset-lg-2">
+          <%= attachment_image_tag(@item, :image, :fill, 360, 300, fallback: "no-image-mini.jpg") %>
+        </div>
+        <div class="col-lg-4">
+          <h3><%= @item.name %></h3>
+          <h4>商品説明</h4>
            <%= @item.introduction %>
-           ¥<%= @item.price * 1.08 %>(税込)
+           <h4>¥<%= @item.price * 1.08 %>(税込)</h4>
 
           <<%= form_for(@cart_item, url: public_cart_items_path) do |f|  %>
             <%= f.label :ご購入個数 %>
             <%= f.number_field :amount, value: 1 ,min:1, max:99 %>個
             <%= f.hidden_field :item_id, value: @item.id  %>
-            <%= f.submit "カートに入れる", class: "btn btn-danger" %>
-          <% end %>
-
-
-      </div>
-  </div>
+            <%= f.submit "カートに入れる", class: "btn btn-primary" %>
+            <% end %>
+          </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
 </div>

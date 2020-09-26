@@ -1,0 +1,13 @@
+<div class="col-lg-4 product-box space">
+  <%= link_to public_item_path(item) do %>
+    <div class="row">
+      <h4><%= item.name %></h4>
+    </div>
+    <div class="row">
+      <%= attachment_image_tag(item, :image, :fill, 220, 180) %>
+    </div>
+  <% end %>
+  <div class="row">
+    <h4><%= item.price %>円</h4>
+  </div>
+</div>
