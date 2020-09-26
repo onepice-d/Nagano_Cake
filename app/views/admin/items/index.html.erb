@@ -1,7 +1,6 @@
-<h4>商品一覧</h4>
-<table>
-	<% @items.each do |item| %>
-  	<thead>
+<h4><strong>商品一覧</strong></h4>
+  <table class="table table-bordered" style="margin-top: 20px;">
+  	<thead class = "thead-dark">
 	  <tr>
 	    <th>商品ID</th>
 		<th>商品名</th>
@@ -11,6 +10,7 @@
 	  </tr>
     </thead>
 	  <tbody>
+	  	<% @items.each do |item| %>
 	    <tr>
 		  <td>
 			<%= item.id %>
