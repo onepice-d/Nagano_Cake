@@ -63,8 +63,28 @@ class Public::OrdersController < ApplicationController
 	end
 
 	def index
+    @orders = @customer.orders
 	end
 
+  def show
+    @order = Order.find(params[:id])
+    if @order.customer_id != current_customer.id
+      redirect_back(fallback_location: root_path)
+      flash[:alert] = "アクセスに失敗しました。"
+  end
+
+  private
+  def set_customer
+    @customer = current_customer
+  end
+
+
+  def order_params
+    params.require(:order).permit(
+      :created_at, :postal_code, :address, :status, :payment_method, :postal_code, :shipping_cost, :name,
+      order_items_attributes: [:order_id, :item_id, :quantity, :order_price, :make_status]
+      )
+  end
 
   private
   def orders
