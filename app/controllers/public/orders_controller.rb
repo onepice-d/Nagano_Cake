@@ -25,12 +25,9 @@ end
 
 
 	def confirm
+    params[:order][:payment_method] = params[:order][:payment_method].to_i
+    @order = Order.new(order_params)
 
-    params[:order][:payment_method] = params[:order][:payment_method].to_i #payment_methodの数値に変換
-    @order = Order.new(order_params) #情報を渡している
-  #分岐
-  
-  end
 
 	def thanks
 	end
@@ -46,7 +43,6 @@ end
       flash[:alert] = "アクセスに失敗しました。"
     end
   end
-
   private
   def set_customer
     @customer = current_customer
@@ -58,9 +54,6 @@ end
       :created_at, :postal_code, :address, :status, :payment_method, :postal_code, :shipping_cost, :name,
       order_items_attributes: [:order_id, :item_id, :quantity, :order_price, :make_status]
       )
-  end
-  def delivery_params
-    params.permit(:address, :name, :postal_code, :customer_id)
   end
 
 end

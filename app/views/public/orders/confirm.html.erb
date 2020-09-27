@@ -1,20 +1,32 @@
-<div class="container">
-	<h3 style="margin-top:40px">注文情報確認</h3><br>
-	<%= form_for  @order,url: {action: 'create'} do |f| %>
 
+<h1>注文情報確認画面</h1>
+<thead>
+	<tr>商品名</tr>
+	<tr>単価(税込)</tr>
+	<tr>数量</tr>
+	<tr>小計</tr>
+</thead>
 
+<%= form_for  @order,url: {action: 'create'} do |f| %>
+支払い方法
 
-  <strong>支払方法 </strong>
-  <%= f.hidden_field :payment_method %>
-  	<%= @order.payment_method %><br>
+<%= f.hidden_field :payment_method %>
+<%= @order.payment_method %>
 
+お届け先
+<% if @order == "my addres" then %>
+<%= current_customer.address %>
+<% elsif @order == "addres" then %>
+<%= f.collection_select :send_to_address, current_customer.deliveries, :id, :address %>
+<% else %>
 
-		
-		<div class="text-center">
-			<%= f.submit "購入を確定する", class: "btn btn-success text-cenrer btn-lg" %>
-		</div>
-		<% end %>
+<%= form_with model: @order, url: confirm_public_orders_path do |f| %>
+<% f.hidden_field :postal_code %>
+<% f.hidden_field :address %>
+<% f.hidden_field :name %>
 
+<%= f.submit "購入を確定する" %>
+<% end %>
+<% end %>
+<% end %>
 
-
-</div>
