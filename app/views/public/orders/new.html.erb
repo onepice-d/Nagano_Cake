@@ -7,10 +7,10 @@
 
       <!--支払方法-->
       <p style="font-weight:bold; text-indent:-2em;">支払い方法</p>
-          <%= f.radio_button :payment_methods, 0, checked: true %>
-          <%= f.label :payment_methods, "銀行振込", style: "display: inline-block"  %><br>
-          <%= f.radio_button :payment_methods, 1 %>
-          <%= f.label :payment_methods, "クレジットカード", style: "display: inline-block" %><br><br>
+          <%= f.radio_button :payment_method, 0, checked: true %>
+          <%= f.label :payment_method, "銀行振込", style: "display: inline-block"  %><br>
+          <%= f.radio_button :payment_method, 1 %>
+          <%= f.label :payment_method, "クレジットカード", style: "display: inline-block" %><br><br>
 
       <!--お届け先-->
       <p style="font-weight:bold; text-indent:-2em;">お届け先</p>
