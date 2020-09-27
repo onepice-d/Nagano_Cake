@@ -5,9 +5,12 @@
 	</div>
       <div class="col-xs-9">
 
-	      <h2><% @items.each do |item| %>
-	    	  <%= item.name %>一覧
-           <% end %>
+	      <h2><% if @items. each do |item| %>
+          全商品一覧
+          <% else %>
+	    	    <%= item.name %>一覧
+          <% end %>
+          <% end %>
     　　　　<span style="display: inline-block;">（<%= @items.count %>種）</span>
   　　　　</h2>
           <% @items.each do |item| %>
