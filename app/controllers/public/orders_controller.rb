@@ -9,7 +9,6 @@ class Public::OrdersController < ApplicationController
 		if current_customer.cart_items.exists?
       	@order = Order.new(order_params)
       	@order.customer_id = current_customer.id
-
       	# 住所のラジオボタン選択に応じて引数を調整
       	 @add = params[:order][:add].to_i
       	 case @add
@@ -58,7 +57,9 @@ class Public::OrdersController < ApplicationController
 
 	def confirm
     params[:order][:payment_method] = params[:order][:payment_method].to_i
+    params[:order][:selected_address] = params[:order][:selected_address].to_i
     @order = Order.new(order_params)
+
   end
 
 	def thanks
@@ -83,7 +84,7 @@ class Public::OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(
-      :created_at, :postal_code, :address, :status, :payment_method, :postal_code, :shipping_cost, :name,
+      :created_at, :postal_code, :address, :status, :payment_method, :postal_code, :shipping_cost, :name, :selected_address,
       order_items_attributes: [:order_id, :item_id, :quantity, :order_price, :make_status]
       )
   end

@@ -6,25 +6,14 @@
 	<tr>小計</tr>
 </thead>
 
-<%= form_for  @order,url: {action: 'create'} do |f| %>
+<%= form_for @order,url: {action: 'create'} do |f| %>
 支払い方法
-
 <%= f.hidden_field :payment_method %>
 <%= @order.payment_method %>
 
 お届け先
-<% if @order == "my addres" then %>
-<%= current_customer.address %>
-<% elsif @order == "addres" then %>
-<%= f.collection_select :send_to_address, current_customer.deliveries, :id, :address %>
-<% else %>
-
-<%= form_with model: @order, url: confirm_public_orders_path do |f| %>
-<% f.hidden_field :postal_code %>
-<% f.hidden_field :address %>
-<% f.hidden_field :name %>
+<%= f.hidden_field :selected_address %>
+<%= @order.selected_address %>
 
 <%= f.submit "購入を確定する" %>
-<% end %>
-<% end %>
 <% end %>
