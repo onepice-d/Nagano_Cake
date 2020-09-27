@@ -5,12 +5,29 @@
 	</div>
       <div class="col-xs-9">
 
-	    <h2>
-    　　　　<span style="display: inline-block;">全商品一覧</span>
+	      <h2><% if @items. each do |item| %>
+          全商品一覧
+          <% else %>
+	    	    <%= item.name %>一覧
+          <% end %>
+          <% end %>
     　　　　<span style="display: inline-block;">（<%= @items.count %>種）</span>
   　　　　</h2>
-	    <% @items.each do |gp| %>
-	     <%= render 'public/items/box', item: gp %>
+          <% @items.each do |item| %>
+	      <div class="col-lg-4 product-box space">
+            <%= link_to public_item_path(item) do %>
+          <div class="row">
+            <h4><%= item.name %></h4>
+          </div>
+          <div class="row">
+            <%= attachment_image_tag(item, :image, :fill, 220, 180 ) %>
+          </div>
+
+         <div class="row">
+           <h4><%= item.price %>円</h4>
+         </div>
+       </div>
+	  <% end %>
 	    <% end %>
 
 	</div>
