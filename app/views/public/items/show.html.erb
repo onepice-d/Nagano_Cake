@@ -16,7 +16,7 @@
           <h3><%= @item.name %></h3>
           <h4>商品説明</h4>
            <%= @item.introduction %>
-           <h4>¥<%= @item.price * 1.08 %>(税込)</h4>
+           <h4>¥<%= (@item.price * 1.1).floor %>円(税込)</h4>
 
           <%= form_with(model: [@item, @cart], local: true, url: {controller: 'cart_items', action: 'create'}) do |f| %>
             <%= f.label :ご購入個数 %>
