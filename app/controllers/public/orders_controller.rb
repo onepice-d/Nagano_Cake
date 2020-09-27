@@ -6,58 +6,31 @@ class Public::OrdersController < ApplicationController
 	end
 
 	def create
-		if current_customer.cart_items.exists?
-      	@order = Order.new(order_params)
-      	@order.customer_id = current_customer.id
+    @order = Order.new(order_params) #初期化代入
+    @order.customer_id = current_customer.id #自身のidを代入
+    @order.save #orderに保存
+  #order_itmemの保存
+  current_customer.cart_items.each do |cart_item| #カートの商品を1つずつ取り出しループ
+  @order_item = OrderItem.new #初期化宣言
+  @order_item.item_id = cart_item.item_id #商品idを注文商品idに代入
+  @order_item.amount = cart_item.amount #商品の個数を注文商品の個数に代入
+  @order_item.order_id =  @order.id #注文商品に注文idを紐付け
+  @order_item.save #注文商品を保存
+end #ループ終わり
 
-      	# 住所のラジオボタン選択に応じて引数を調整
-      	 @add = params[:order][:add].to_i
-      	 case @add
-        when 1
-          @order.post_code = @customer.post_code
-          @order.address = @customer.address
-          @order.name = full_name(@customer)
-        when 2
-          @order.postalcode = params[:order][:postal_code]
-          @order.address = params[:order][:address]
-          @order.name = params[:order][:name]
-        when 3
-          @order.postal_code = params[:order][:postal_code]
-          @order.address = params[:order][:address]
-          @order.name = params[:order][:name]
-      end
-      @order.save
+    current_customer.cart_items.destroy_all #カートの中身を削除
+    redirect_to public_orders_thanks_path #thanksに遷移
 
-      # send_to_addressで住所モデル検索、該当データなければ新規作成
-      if Delivery.find_by(address: @address).nil?
-        @delivery = Delivery.new
-        @delivery.post_code = @order.postal_code
-        @delivery.address = @order.address
-        @delivery.name = @order.name
-        @delivery.customer_id = current_customer.id
-        @delivery.save
-      end
-
-      	# cart_itemsの内容をorder_itemsに新規登録
-      current_customer.cart_items.each do |cart_item|
-        order_item = @order.order_items.build
-        order_item.order_id = @order.id
-        order_item.item_id = cart_item.item_id
-        order_item.amount = cart_item.quantity
-        order_item.price = cart_item.item.price
-        order_item.save
-        cart_item.destroy #order_itemに情報を移したらcart_itemは消去
-      end
-      render :thanks
-    else
-      redirect_to public_items_path
-　　　flash[:danger] = 'カートが空です。'
-    end
-  end
+end
 
 
 	def confirm
-	end
+
+    params[:order][:payment_method] = params[:order][:payment_method].to_i #payment_methodの数値に変換
+    @order = Order.new(order_params) #情報を渡している
+  #分岐
+  
+  end
 
 	def thanks
 	end
@@ -71,6 +44,7 @@ class Public::OrdersController < ApplicationController
     if @order.customer_id != current_customer.id
       redirect_back(fallback_location: root_path)
       flash[:alert] = "アクセスに失敗しました。"
+    end
   end
 
   private
@@ -85,12 +59,8 @@ class Public::OrdersController < ApplicationController
       order_items_attributes: [:order_id, :item_id, :quantity, :order_price, :make_status]
       )
   end
-
-  private
-  def orders
-      params.require(:order).permit(:customer_id, :shipping_coat, :total_price, :payment_methods, :postal_code, :address, :name, :status)
+  def delivery_params
+    params.permit(:address, :name, :postal_code, :customer_id)
   end
 
 end
-
-
