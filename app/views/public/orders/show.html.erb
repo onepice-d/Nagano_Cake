@@ -23,7 +23,7 @@
               <strong>配送先</strong>
             </div>
             <div class="col-lg-9">
-              <%= @order.send_to_address %>
+              <%= @order.address %>
             </div>
           </div>
           <div class="row space-sm">
@@ -31,7 +31,7 @@
               <strong>支払方法</strong>
             </div>
             <div class="col-lg-9">
-              <%= how_to_pay(@order.how_to_pay) %>
+              <%= payment_method(@order.payment_method) %>
             </div>
           </div>
           <div class="row space-sm">
@@ -68,7 +68,7 @@
       <% @order.order_items.each do |order_item| %>
       <div class="row space-sm">
         <div class="col-lg-4">
-          <%= order_item.product.name %>
+          <%= order_item.item.name %>
         </div>
         <div class="col-lg-3">
           <%= price_include_tax(order_item.order_price) %>

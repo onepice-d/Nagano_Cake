@@ -1,0 +1,60 @@
+<div class="container">
+	<div class="row">		
+		<h2><%= @customer.last_name %><%= @customer.first_name %>の会員情報編集</h2>
+	</div>
+	
+	<div class="row mt-3 flex-column align-items-center">		
+		<%= form_for(@customer, url: admin_customer_path) do |f| %>
+		
+		 <div class="form-group row">
+		    <%= f.label :会員id %>
+		    <%= f.label @customer.id %>
+		  </div>
+		
+		  <div class="form-group row">
+		    <%= f.label :氏名 %>
+		    <%= f.text_field :last_name %>
+		    <%= f.text_field :first_name %>
+		  </div>
+		
+		  <div class="form-group row">
+		    <%= f.label :フリガナ%>
+		    <%= f.text_field :last_name_kana %>
+		    <%= f.text_field :first_name_kana %>
+		  </div>
+		
+		  <div class="form-group row">
+		    <%= f.label :郵便番号（ハイフンなし） %>
+		    <%= f.text_field :postal_code %>
+		  </div>
+		
+		  <div class="form-group row">
+		    <%= f.label :住所 %>
+		    <%= f.text_area :address %>
+		  </div>
+		
+		  <div class="form-group row">
+		    <%= f.label :電話番号（ハイフンなし） %>
+		    <%= f.telephone_field :telephone_number %>
+		  </div>
+		
+		  <div class="form-group row">
+		    <%= f.label :メールアドレス %>
+		    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+		  </div>
+		
+		  <div class="form-group row">
+		    <%= f.label :会員ステータス %>
+		    <%= f.radio_button :is_deleted, :false %>
+		    <%= f.label :is_deleted, "有効会員" %>
+		    <%= f.radio_button :is_deleted, :true %>
+		    <%= f.label :is_deleted, "退会済み" %>
+		  </div>
+		
+		
+		  <div class="actions">
+		    <%= f.submit "編集内容を保存する", class:"btn btn-primary"  %>
+		  </div>
+		<% end %>
+	</div>
+</div>

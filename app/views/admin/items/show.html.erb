@@ -13,7 +13,7 @@
 	          <tr><th><h4>商品名</h4></th><td><%= @item.name %></td></tr>
 	          <tr><th><h4>商品説明</h4></th><td><%= @item.introduction %></td></tr>
 	          <tr><th><h4>ジャンル</h4></th><td><%= @genre.name %></td></tr>
-	          <tr><th><h4>税込価格 (税抜価格)</h4></th><td><%= @item.price %> (<%=@item.price %>)円</td></tr>
+	          <tr><th><h4>税込価格 (税抜価格)</h4></th><td><%= (@item.price*1.1).floor %> (<%= @item.price %>)円</td></tr>
               <tr><th><h4>販売ステータス</h4></th>
                 <td><% if @item.is_active == true %>
       	              <%= "販売中" %>

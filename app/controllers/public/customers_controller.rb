@@ -25,8 +25,8 @@ class Public::CustomersController < ApplicationController
 	def withdrow
 		@customer = Customer.find(current_customer.id)
     	#現在ログインしているユーザーを@customerに格納
-    	@customer.update(is_deleted: "Invalid")
-    	#updateで登録情報をにInvalid変更
+    	@customer.update(is_deleted: true)
+    	#updateで登録情報をにtrue（退会）に変更
     	reset_session
     	#sessionIDのresetを行う
     	redirect_to  public_top_path
@@ -36,7 +36,7 @@ class Public::CustomersController < ApplicationController
 	private
 
 	def customer_params
-		params.require(:customer).permit(:email, :last_name, :first_name, :last_name_kana, :first_name_kana, :postal_code, :address, :telephone_number)
+		params.require(:customer).permit(:email, :last_name, :first_name, :last_name_kana, :first_name_kana, :postal_code, :address, :telephone_number, :is_deleted)
 	end
 
 end

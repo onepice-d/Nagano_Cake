@@ -1,59 +1,53 @@
-<div class="container">
+<div class="container takasa">
   <div class="row">
-    <div class="col-lg-12">
-      <h3 class="title">注文情報入力</h3><br>
 
-      <%= form_with model: @order, local: true, url: confirm_public_orders_path do |f| %>
+    <div class="col-xs-7">
+      <h2><i class="fas fa-pen"></i>注文情報入力</h2>
+      <p><%= notice %></p>
 
-      <!--支払方法-->
-      <p style="font-weight:bold; text-indent:-2em;">支払い方法</p>
-          <%= f.radio_button :payment_method, 0, checked: true %>
-          <%= f.label :payment_method, "銀行振込", style: "display: inline-block"  %><br>
-          <%= f.radio_button :payment_method, 1 %>
-          <%= f.label :payment_method, "クレジットカード", style: "display: inline-block" %><br><br>
 
-      <!--お届け先-->
-      <p style="font-weight:bold; text-indent:-2em;">お届け先</p>
+      <%= form_with(model: @order, local: true, url: confirm_public_orders_path, method: :post) do |f| %>
+      <div class="field row" style="margin-left:20px; ">
+        <h4><strong>支払い方法</strong></h4>
+    <!-- ラジオボタンの記述 -->
+       <label style="margin-left: 60px;"><%= f.radio_button :payment_method, 0, checked: "checked"%> 銀行振込 </label><br>
+        <label style="margin-left: 60px;"><%= f.radio_button :payment_method, 1 %> クレジットカード</label>
+        <h4><strong>お届け先</strong></h4>
 
-        <!--ご自身の住所-->
-        <%= f.radio_button(:selected_address, "my address", checked: true) %>
-        <%= f.label :selected_address, "ご自身の住所", style:"display:inline-block" %>
-        <div style="text-indent:2em;">
-          <%= current_customer.address %>
+<!-- 自身の住所  -->
+
+        <label style="margin-left: 60px;"><%= f.radio_button :address_number,1,checked: "checked" %> ご自身の住所 </label><br>
+        <div style="margin-left:70px;"><%= current_customer.postal_code %> <%= current_customer.address %><br><%= current_customer.last_name %><%= current_customer.first_name %></div><br><br>
+<!-- end -->
+
+<!-- 登録済住所 -->
+        <div>
+          <label style="margin-left: 60px;"><%= f.radio_button :address_number ,2%> 登録済からの選択</label><br>
+          <div style="margin-left:80px; padding:0 100px;"><%= f.collection_select(:address, current_customer.deliveries, :id, :address)%><br><br>
+          </div>
+
         </div>
+<!-- end -->
 
-        <!--登録先住所から選択-->
-        <%= f.radio_button(:selected_address, "address") %>
-        <%= f.label :登録先住所から選択 %><br>
-        <div style="text-indent:2em;">
-          <%= f.collection_select :send_to_address, current_customer.deliveries, :id, :address %>
+
+
+<!-- 新規届け先 -->
+        <label style="margin-left: 60px;"><%= f.radio_button :address_number,3 %> 新しいお届け先</label><br>
+        <div style="display: flex; margin-left:15% ;">
+          <div  style="display: flex flex-direction: column;  flex-wrap: wrap;  width: 60px;">
+            <%= f.label :郵便番号, style: "width: 100px;"%><br><br>
+            <%= f.label :住所, style: "width: 100px;"%><br><br>
+            <%= f.label :宛名, style: "width: 100px;"%><br><br>
+          </div>
+          <div style=" margin-left:20px; ">
+            <%= f.text_field :postal_code  %><br><br>
+            <%= f.text_field :address ,size: "60" %><br><br>
+            <%= f.text_field :name %><br><br>
+           <%= f.submit "確認画面に進む", class: "btn btn-primary text-cenrer" %>
+          </div>
+      <!-- end -->
+          <% end %>
         </div>
-
-        <!--新しいお届け先-->
-        <%= f.radio_button(:selected_address, "new address") %>
-        <%= f.label :新しいお届け先 %><br>
-
-        <div style="text-indent:1em;">
-          <%= f.label :郵便番号, style: "width: 100px;" %>
-          <%= f.text_field :postal_code, style: "width: 200px;" %>
-        </div>
-
-        <div style="text-indent:1em;">
-          <%= f.label :住所, style: "width: 100px;"%>
-          <%= f.text_field :address, style: "width: 500px;" %>
-        </div>
-
-        <div style="text-indent:1em;">
-          <%= f.label :宛名, style: "width: 100px;" %>
-          <%= f.text_field :name, style: "width: 200px;" %>
-        </div>
-
-        <!--確認画面遷移ボタン-->
-        <div class="text-center">
-          <%= f.submit "確認画面へ進む", class: "btn btn-primary" %>
-        </div>
-
-      <% end %>
+      </div>
     </div>
-  </div>
 </div>

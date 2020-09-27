@@ -6,6 +6,7 @@ class Public::OrdersController < ApplicationController
 	end
 
 	def create
+
 		if current_customer.cart_items.exists?
       	@order = Order.new(order_params)
       	@order.customer_id = current_customer.id
@@ -60,7 +61,10 @@ class Public::OrdersController < ApplicationController
     params[:order][:selected_address] = params[:order][:selected_address].to_i
     @order = Order.new(order_params)
 
+
   end
+
+
 
 	def thanks
 	end
