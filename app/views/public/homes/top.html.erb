@@ -2,10 +2,15 @@
 <%= render "public/genres/genre", genre: @genres %>
 <div>
 <tr><%= image_tag "top.JPG", :size =>'900x480' %></tr>
-ようこそ、NaganoCakeへ！<br>
-このサイトは、ケーキ販売のECサイトになります。<br>
-会員でない方も商品の閲覧はできますが、<br>
-購入には会員登録が必要になります。<br>
+	ようこそ、NaganoCakeへ！<br>
+	このサイトは、ケーキ販売のECサイトになります。<br>
+	会員でない方も商品の閲覧はできますが、<br>
+	購入には会員登録が必要になります。<br>
 </div>
 <h2>オススメ商品</h2>
+	<% @items.first(4).each do |gp| %>
+		<%= render 'public/items/box', item: gp %>
+	<% end %>
+<div>
 <%= link_to "もっと見る", public_items_path %>
+</div>

@@ -28,7 +28,8 @@ Rails.application.routes.draw do
     end
   end
     resources :deliveries, only: [:index, :edit, :update, :create, :destroy]
-    resources :cart_items, only: [:index, :create, :destroy, :update, :destroy_all]
+    delete '/cart_items/destroy_all' => 'cart_items#destroy_all'
+    resources :cart_items, only: [:index, :create, :destroy, :update]
     resources :order_items, only: [:index]
     resources :genres, only: [:show]
   end
@@ -36,7 +37,7 @@ Rails.application.routes.draw do
   namespace :admin do
   	get "/top"=> "homes#top"
     root to: 'homes#top'
-  	resources :customers, only: [:index, :edit, :update]
+  	resources :customers, only: [:index, :edit, :update, :show]
   	resources :admins, only: [:show]
     resources :items, only: [:index, :new, :show, :edit, :create, :update]
     resources :orders, only: [:index, :show, :create, :update]
