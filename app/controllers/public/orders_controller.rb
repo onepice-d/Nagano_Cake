@@ -57,7 +57,9 @@ class Public::OrdersController < ApplicationController
 
 
 	def confirm
-	end
+    params[:order][:payment_method] = params[:order][:payment_method].to_i
+    @order = Order.new(order_params)
+  end
 
 	def thanks
 	end
@@ -71,8 +73,8 @@ class Public::OrdersController < ApplicationController
     if @order.customer_id != current_customer.id
       redirect_back(fallback_location: root_path)
       flash[:alert] = "アクセスに失敗しました。"
+    end
   end
-
   private
   def set_customer
     @customer = current_customer
@@ -86,11 +88,4 @@ class Public::OrdersController < ApplicationController
       )
   end
 
-  private
-  def orders
-      params.require(:order).permit(:customer_id, :shipping_coat, :total_price, :payment_methods, :postal_code, :address, :name, :status)
-  end
-
 end
-
-
