@@ -1,8 +1,8 @@
 class Order < ApplicationRecord
-	belongs_to :customer, dependent: :destroy
 	has_many :order_items
+	belongs_to :customer
+	enum payment_method: {"銀行":0, "クレジットカード":1}
 
-	enum payment_method: {銀行:0, クレジットカード:1}
-	enum selected_addres: {}
 
-end
+	enum add: {add:1,add:2,add:3}
+   end

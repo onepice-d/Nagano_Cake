@@ -15,8 +15,9 @@ root 'public/homes#top'
 
   namespace :public do
     get "/top"=> "homes#top"
-    root to: 'homes#top' 
+    root to: 'homes#top'
     get 'homes/about' => 'homes#about'
+    get 'orders/thanks' => 'orders#thanks'
   	resources :customers, only: [:index, :show, :new, :edit, :create, :update, :destroy]
       get "customers/:id/check" => "customers#check"
       patch "customers/:id/check" => "customers#withdrow"

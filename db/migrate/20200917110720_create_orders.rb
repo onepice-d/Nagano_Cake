@@ -10,7 +10,7 @@ class CreateOrders < ActiveRecord::Migration[5.2]
       t.integer :payment_method
       t.integer :address_number
       t.integer :status, null: :false, limit: 5
-
+      t.text :selected_address
       t.timestamps
     end
   end

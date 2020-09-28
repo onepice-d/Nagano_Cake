@@ -9,53 +9,79 @@ class Public::OrdersController < ApplicationController
 	end
 
 	def create
-    @order = Order.new(order_params) #初期化代入
-    @order.customer_id = current_customer.id #自身のidを代入
-    @order.save #orderに保存
-#order_itmemの保存
-current_customer.cart_items.each do |cart_item| #カートの商品を1つずつ取り出しループ
-  @order_item = OrderItem.new #初期化宣言
-  @order_item.item_id = cart_item.item_id #商品idを注文商品idに代入
-  @order_item.amount = cart_item.amount #商品の個数を注文商品の個数に代入
-  @order_item.price = (cart_item.item.price) #消費税込みに計算して代入
-  @order_item.order_id =  @order.id #注文商品に注文idを紐付け
-  @order_item.save #注文商品を保存
-end #ループ終わり
 
-    current_customer.cart_items.destroy_all #カートの中身を削除
-    redirect_to public_orders_thanks_path #thanksに遷移
+		if current_customer.cart_items.exists?
+      	@order = Order.new(order_params)
+      	@order.customer_id = current_customer.id
+      	# 住所のラジオボタン選択に応じて引数を調整
+      	 @add = params[:order][:address].to_i
+      	 case @add
+        when 1
+          @order.postal_code = @customer.postal_code
+          @order.address = @customer.address
+          @order.name = full_name(@customer)
+        when 2
+          @order.postalcode = params[:order][:postal_code]
+          @order.address = params[:order][:address]
+          @order.name = params[:order][:name]
+        when 3
+          @order.postal_code = params[:order][:postal_code]
+          @order.address = params[:order][:address]
+          @order.name = params[:order][:name]
+      end
+      @order.save
 
-end
+      # send_to_addressで住所モデル検索、該当データなければ新規作成
+      if Delivery.find_by(address: @address).nil?
+        @delivery = Delivery.new
+        @delivery.postal_code = @order.postal_code
+        @delivery.address = @order.address
+        @delivery.name = @order.name
+        @delivery.customer_id = current_customer.id
+        @delivery.save
+      end
+
+      	# cart_itemsの内容をorder_itemsに新規登録
+      current_customer.cart_items.each do |cart_item|
+        order_item = @order.order_items.build
+        order_item.order_id = @order.id
+        order_item.item_id = cart_item.item_id
+        order_item.amount = cart_item.amount
+        order_item.price = cart_item.item.price
+        order_item.save
+        cart_item.destroy #order_itemに情報を移したらcart_itemは消去
+      end
+      render :thanks
+    else
+      redirect_to public_items_path
+    end
+  end
 
 	def confirm
     params[:order][:payment_method] = params[:order][:payment_method].to_i
     @order = Order.new(order_params)
-    @deliveries = Delivery.where(customer_id: current_customer)
 
+    @customer = current_customer
     @cart_items = current_customer.cart_items
-    @order.payment_method = params[:order][:payment_method]
-    # 住所のラジオボタン選択に応じて引数を調整
-    if params[:order][:address_number] == "1" #address_numberが　”1”　なら下記　ご自身の住所が選ばれたら
-      @order.postal_code = current_customer.postal_code #自身の郵便番号をorderの郵便番号に入れる
-      @order.address = current_customer.address #自身の住所をorderの住所に入れる
-      @order.name = current_customer.last_name+current_customer.first_name #自身の宛名をorderの宛名に入れる
-
-    elsif  params[:order][:address_number] ==  "2" #address_numberが　”2”　なら下記　登録済からの選択が選ばれたら
-      @order.postal_code = Delivery.find(params[:order][:delivery]).postal_code #newページで選ばれた配送先住所idから特定して郵便番号の取得代入
-      @order.address = Delivery.find(params[:order][:delivery]).address #newページで選ばれた配送先住所idから特定して住所の取得代入
-      @order.name = Delivery.find(params[:order][:delivery]).name #newページで選ばれた配送先住所idから特定して宛名の取得代入
-
-    elsif params[:order][:address_number] ==  "3" #address_numberが　”3”　なら下記　新しいお届け先が選ばれたら
-      @delivery = Delivery.new()
-      @delivery.address = params[:order][:address] #newページで新しいお届け先に入力した住所を取得代入
-      @delivery.name = params[:order][:name] #newページで新しいお届け先に入力した宛名を取得代入
-      @delivery.postal_code = params[:order][:postal_code] #newページで新しいお届け先に入力した郵便番号を取得代入
-      @delivery.customer_id = current_customer.id #newページで新しいお届け先に入力したcustomer_idを取得代入#保存
-      @order.postal_code = @delivery.postal_code #上記で代入された郵便番号をorderに代入
-      @order.name = @delivery.name #上記で代入された宛名をorderに代入
-      @order.address = @delivery.address #上記で代入された住所をorderに代入      
+    @add = params[:order][:add].to_i
+    case @add
+      when 1
+        @order.postal_code = @customer.postal_code
+        @order.address = @customer.address
+        @order.name = @customer.last_name + @customer.first_name
+      when 2
+        @address = params[:order][:delivery]
+        @delivery = Delivery.find(@address)
+        @order.postal_code = @delivery.postal_code
+        @order.address = @delivery.address
+        @order.name = @delivery.name
+      when 3
+        @order.postal_code = params[:order][:postal_code]
+        @order.address = params[:order][:address]
+        @order.name = params[:order][:name]
+    end
   end
-end
+
 
 
 	def thanks
@@ -82,8 +108,10 @@ end
 
   def order_params
     params.require(:order).permit(
-      :created_at, :postal_code, :address, :status, :payment_method, :postal_code, :shipping_cost, :name,
-      order_items_attributes: [:order_id, :item_id, :amount, :order_price, :make_status]
+      :created_at,
+      :address, :status, :payment_method, :postal_code, :shipping_cost, :name, :selected_address,
+      order_items_attributes: [:order_id, :item_id, :quantity, :order_price, :make_status]
+
       )
   end
   def delivery_params
