@@ -1,12 +1,18 @@
-
+<div class="col-xs-2">
 <%= render "public/genres/genre", genre: @genres %>
-<div>
+</div>
+
 <tr><%= image_tag "top.JPG", :size =>'900x480' %></tr>
+
+<div class="cover-text text-center">
+<h4>
 	ようこそ、NaganoCakeへ！<br>
 	このサイトは、ケーキ販売のECサイトになります。<br>
 	会員でない方も商品の閲覧はできますが、<br>
 	購入には会員登録が必要になります。<br>
+</h4>
 </div>
+<div class="col-xs-8">
 <h2>オススメ商品</h2>
 	<% @items.first(4).each do |gp| %>
 		<%= render 'public/items/box', item: gp %>

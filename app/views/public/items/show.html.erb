@@ -10,7 +10,7 @@
         <div class="row">
           <h2>商品詳細ページ</h2>
         <div class="col-lg-4 offset-lg-2">
-          <%= attachment_image_tag(@item, :image, :fill, 360, 300, fallback: "no-image-mini.jpg") %>
+          <%= attachment_image_tag(@item, :image, :fill, 360, 300, fallback: "NO_IMAGE.png", size:'360x300') %>
         </div>
         <div class="col-lg-4">
           <h3><%= @item.name %></h3>

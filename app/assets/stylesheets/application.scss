@@ -25,6 +25,13 @@ body {
 	margin-top: 40px;
 }
 
-.h2 {
-	font-family: 'Noto Serif JP', sans-serif;
+
+.card-img-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1.25rem;
 }
+

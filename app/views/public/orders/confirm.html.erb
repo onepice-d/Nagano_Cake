@@ -1,14 +1,20 @@
-
-<h1>注文情報確認画面</h1>
-<%= form_with(model: @order, url:{ action: 'create' }, local: true) do |f| %>
-  <div class="d-none d-lg-block space">
-    <div class="row">
-      <div class="col-lg-5"><h4>商品名</h4></div>
-      <div class="col-lg-2"><h4>単価（税込）</h4></div>
-      <div class="col-lg-2"><h4>数量</h4></div>
-      <div class="col-lg-2"><h4>小計</h4></div>
-    </div>
+<div class="container">
+  <div class="row">
+    <h2>注文情報確認画面</h2>
   </div>
+  
+  <div class="row">
+    <%= form_with(model: @order, url:{ action: 'create' }, local: true) do |f| %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>商品名</th>
+          <th>単価（税込）</th>
+          <th>数量</th>
+          <th>小計</th>
+        </tr>
+      </thead>
+
 
  <% sum_all = 0 %>
 <% @cart_items.each do |cart_item| %>
@@ -34,76 +40,58 @@
       <% sum_all += sum_item %>
 
     </div>
+
   </div>
-<% end %>
+  
+<br><br><br>
 
- <div class="row space">
-    <div class="col-lg-12">
-      <div class="row">
-        <div class="col-lg-3">
-          <strong>送料</strong>
-        </div>
-
-        <div class="col-lg-3">
-          800円
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-3">
-          <strong>商品合計</strong>
-        </div>
-        <div class="col-lg-3">
-          <%= sum_all.to_i %>円
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-3">
-          <strong>ご請求額</strong>
-        </div>
-        <div class="col-lg-3">
-          <% billling_amount = sum_all + 800.to_i %>
-          <%= billling_amount.to_i %>円
-        </div>
-
-      </div>
-    </div>
+  <div class="row">
+    <table class="table">
+      <tbody>
+        <tr>
+          <th>送料</th>
+          <td>800円</td>
+        </tr>
+        <tr>
+          <th>商品合計</th>
+          <td><%= sum_all.to_i %>円</td>
+        </tr>
+        <tr>
+          <th>ご請求額</th>
+          <td>
+            <% billling_amount = sum_all + 800.to_i %>
+            <%= billling_amount.to_i %>円
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
-  <div class="row space-sm">
-    <div class="col-lg-2">
+  <div class="row">
+    <h4>
+      支払い方法
+      <strong>
+        <%= f.hidden_field :payment_method, :value=>@order.payment_method%>
+        <%= @order.payment_method %>  
+      </strong>
+    </h4>
+    <br>
 
-支払い方法
-    </div>
-    <div class="col-lg-4">
-    	<%= f.hidden_field :payment_method, :value=>@order.payment_method%>
-		<%= @order.payment_method %>
-    </div>
-  </div>
-
-  <div class="row space-sm">
-    <div class="col-lg-2">
-      <h3>お届け先</h3>
-    </div>
-    <div class="col-lg-4">
-      <%= @order.postal_code %>
-      <%= @order.address %>
-      <%= @order.name %>
-    </div>
+    <h4>お届け先</h4>
+    <h4>〒<%= @order.postal_code %></h4>
+    <h4><%= @order.address %></h4>
+    <h4><%= @order.name %></h4>
   </div>
 
   <%= f.hidden_field :customer_id, :value => current_customer.id %>
   <%= f.hidden_field :postal_code, :value =>@order.postal_code %>
   <%= f.hidden_field :address, :value => @order.address %>
   <%= f.hidden_field :address, :value => @order.address %>
+
+<div class="col-lg-2 offset-lg-5">
+<%= f.submit "購入を確定する", class: "btn btn-primary text-cenrer" %>
 </div>
 
 
-
-
-<div class="row space">
-  <div class="col-lg-2 offset-lg-5">
-<%= f.submit "購入を確定する" %>
+  <% end %>
 </div>
-</div>
-<% end %>
-
