@@ -26,7 +26,8 @@
           <ul class="nav navbar-nav navbar-right" >
              <!--if文でadminのサインイン、customerサインインとアウト時の表示を変更-->
             <% if customer_signed_in? %>
-            <li>ようこそ！<%= current_customer.last_name + " " + current_customer.first_name %>様</li>
+            <li class="bar-center">
+            ようこそ、<%=current_customer.last_name%><%=current_customer.first_name%>さん</li>
             <li><%= link_to 'マイページ', public_customer_path(current_customer), class: 'glyphicon glyphicon-home home' %></li>
             <li><%= link_to '商品一覧', public_items_path, class: 'glyphicon glyphicon-user users' %></li>
             <li><%= link_to 'カート', public_cart_items_path, class: 'glyphicon glyphicon-book books' %></li>

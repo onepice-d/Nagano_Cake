@@ -55,6 +55,7 @@ class Public::OrdersController < ApplicationController
     else
       redirect_to public_items_path
     end
+
   end
 
 	def confirm
