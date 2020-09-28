@@ -19,12 +19,9 @@
   <% @orders.each do |order| %>
   <div class="row space-sm">
     <div class="col-lg-2">
-      <%= simple_time(order.created_at) %>
+      <%= order.created_at.strftime('%Y/%m/%d') %>
     </div>
     <div class="col-lg-3">
-      <div class="row">
-        <%= order.post_code + " " + order.address %>
-      </div>
       <div class="row">
         <%= order.address %>
       </div>
@@ -33,15 +30,15 @@
       <% sum_all = 0 %>
       <% order.order_items.each do |order_item| %>
       <%= order_item.item.name %><br>
-      <% sub_total = price_include_tax(order_item.order_price).to_i * order_item.amount %>
-      <% sum_all += sub_total.to_i %>
+      
+      
       <% end %>
     </div>
     <div class="col-lg-2">
-      <%= sum_all += order.shipping_cost.to_i %>円
+      <%= sum_all += 800 %>円
     </div>
     <div class="col-lg-1">
-      <%= order_status(order) %>
+      <%= order.status %>
     </div>
     <div class="col-lg-2">
       <%= link_to '表示する', public_order_path(order), class: "btn btn-sm btn-danger" %>
@@ -49,10 +46,3 @@
   </div>
   <% end %>
 
-
-        <td><%= link_to "注文詳細", public_order_path(order) %></td>
-      </tr>
-    <% end %>
-    </table>
-  </table>
-</div>
