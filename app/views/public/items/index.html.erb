@@ -11,7 +11,10 @@
           <% @items.each do |item| %>
 	      <div class="col-lg-4 product-box space">
           <div class="row">
-            <h4><%= item.name %></h4>
+            <h4>
+              <%= link_to public_item_path(item) do %>
+              <%= item.name %></h4>
+              <% end %>
           </div>
           <div class="row">
           <%= link_to public_item_path(item) do %>

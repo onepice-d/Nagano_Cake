@@ -22,7 +22,9 @@
             <%= f.label :ご購入個数 %>
             <%= f.number_field :amount, value: 1 ,min:1, max:99 %>個
             <%= f.hidden_field :item_id, value: @item.id  %>
+            <% if customer_signed_in? %>
             <%= f.submit "カートに入れる", class: "btn btn-primary" %>
+            <% end %>
             <% end %>
           </div>
          </div>
