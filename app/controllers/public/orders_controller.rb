@@ -27,7 +27,7 @@ end
 	def confirm
     params[:order][:payment_method] = params[:order][:payment_method].to_i
     @order = Order.new(order_params)
-
+   end
 
 	def thanks
 	end
@@ -43,6 +43,7 @@ end
       flash[:alert] = "アクセスに失敗しました。"
     end
   end
+
   private
   def set_customer
     @customer = current_customer
