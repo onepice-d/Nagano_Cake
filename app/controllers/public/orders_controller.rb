@@ -55,6 +55,7 @@ class Public::OrdersController < ApplicationController
     else
       redirect_to public_items_path
     end
+
   end
 
 	def confirm
@@ -93,7 +94,6 @@ class Public::OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
-    
     if @order.customer_id != current_customer.id
       redirect_back(fallback_location: root_path)
       flash[:alert] = "アクセスに失敗しました。"

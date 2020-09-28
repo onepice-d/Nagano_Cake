@@ -1,8 +1,8 @@
 <div class="cart_container" style="width:90%; margin: 20px auto; position:relative;">
 
-<strong style="font-size:18px;">
+<h2 style="font-size:18px;">
   ショッピングカート
-</strong>
+</h2>
 
 <div class="row" style="width:100%; height:20px;"></div>
 
@@ -13,7 +13,7 @@
 <table class="table table-bordered">
   <tr style="background:#dad7d7; border: 1px solid #fff;">
     <th>商品名</th>
-    <th>単価</th>
+    <th>単価(税込)</th>
     <th>数量</th>
     <th>小計</th>
     <th></th>
@@ -24,7 +24,7 @@
             <td><%= attachment_image_tag cart_item.item, :image, format: 'jpeg', size: "80x60" %>　<%= cart_item.item.name %></td>
 
             <!--税込単価-->
-            <td style="vertical-align: middle;"><%= (cart_item.item.price).to_i.to_s(:delimited) %></td>
+            <td style="vertical-align: middle;"><%= (cart_item.item.price*1.1).floor.to_i.to_s(:delimited) %></td>
 
             <!--数量-->
             <td class="text-center", style="vertical-align: middle;">
@@ -35,7 +35,7 @@
             </td>
 
             <!--小計-->
-            <td style="vertical-align: middle;"><%= (cart_item.item.price * cart_item.amount).to_i.to_s(:delimited) %></td>
+            <td style="vertical-align: middle;"><%= (cart_item.item.price * cart_item.amount*1.1).floor.to_i.to_s(:delimited) %></td>
 
             <!--削除ボタン-->
             <td>
@@ -52,7 +52,7 @@
   </div>
   <div class="col-xs-4 pull-right">
     <table class="table table-striped">
-      <tr style="background:#dad7d7; border: 1px solid #fff;"><th>合計金額<td class="total-price"><%= @total_price %></td></th>
+      <tr style="background:#dad7d7; border: 1px solid #fff;"><th>合計金額<td class="total-price"><%= (@total_price*1.1).floor.to_i.to_s(:delimited) %></td></th>
       </tr>
     </table>
   </div>

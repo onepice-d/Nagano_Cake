@@ -1,6 +1,6 @@
 class Public::ItemsController < ApplicationController
 	def index
-		@items = Item.all
+		@items = Item.page(params[:page]).per(8)
 		if params[:sort]
 			@items = Item.where(genre_id: params[:sort])
 		end
@@ -9,7 +9,7 @@ class Public::ItemsController < ApplicationController
 
 	def show
 		@item = Item.find(params[:id])
-		@genre = Genre.find(params[:id])
+		@genre = Genre.where(genre_id: params[:status])
 		@cart_item = CartItem.new(item_id: @item.id)
 		@genres = Genre.all
 
