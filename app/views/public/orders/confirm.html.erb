@@ -1,12 +1,15 @@
 
 <h1>注文情報確認画面</h1>
-<thead>
-	<tr>商品名</tr>
-	<tr>単価(税込)</tr>
-	<tr>数量</tr>
-	<tr>小計</tr>
-</thead>
- <%= form_with(model: @order, url:{ action: 'create' }, local: true) do |f| %>
+<%= form_with(model: @order, url:{ action: 'create' }, local: true) do |f| %>
+  <div class="d-none d-lg-block space">
+    <div class="row">
+      <div class="col-lg-5"><h4>商品名</h4></div>
+      <div class="col-lg-2"><h4>単価（税込）</h4></div>
+      <div class="col-lg-2"><h4>数量</h4></div>
+      <div class="col-lg-2"><h4>小計</h4></div>
+    </div>
+  </div>
+
  <% sum_all = 0 %>
 <% @cart_items.each do |cart_item| %>
  <div class="row space-sm">
@@ -41,6 +44,9 @@
           <strong>送料</strong>
         </div>
 
+        <div class="col-lg-3">
+          800円
+        </div>
       </div>
       <div class="row">
         <div class="col-lg-3">
@@ -53,6 +59,10 @@
       <div class="row">
         <div class="col-lg-3">
           <strong>ご請求額</strong>
+        </div>
+        <div class="col-lg-3">
+          <% billling_amount = sum_all + 800.to_i %>
+          <%= billling_amount.to_i %>円
         </div>
 
       </div>
@@ -89,9 +99,11 @@
 
 
 
+
 <div class="row space">
   <div class="col-lg-2 offset-lg-5">
 <%= f.submit "購入を確定する" %>
 </div>
 </div>
 <% end %>
+

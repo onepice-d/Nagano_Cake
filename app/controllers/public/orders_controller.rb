@@ -1,5 +1,8 @@
 class Public::OrdersController < ApplicationController
   before_action :authenticate_customer!
+   before_action :set_customer
+
+
 	def new
 		@order = Order.new(customer_id: current_customer)
     @deliveries = Delivery.where(customer_id: current_customer)
@@ -54,10 +57,10 @@ class Public::OrdersController < ApplicationController
     end
   end
 
-
 	def confirm
     params[:order][:payment_method] = params[:order][:payment_method].to_i
     @order = Order.new(order_params)
+
     @customer = current_customer
     @cart_items = current_customer.cart_items
     @add = params[:order][:add].to_i
@@ -80,15 +83,17 @@ class Public::OrdersController < ApplicationController
   end
 
 
+
 	def thanks
 	end
 
 	def index
-    @orders = @customer.orders
+    @orders = Order.where(customer_id: current_customer)
 	end
 
   def show
     @order = Order.find(params[:id])
+    
     if @order.customer_id != current_customer.id
       redirect_back(fallback_location: root_path)
       flash[:alert] = "アクセスに失敗しました。"
@@ -106,7 +111,11 @@ class Public::OrdersController < ApplicationController
       :created_at,
       :address, :status, :payment_method, :postal_code, :shipping_cost, :name, :selected_address,
       order_items_attributes: [:order_id, :item_id, :quantity, :order_price, :make_status]
+
       )
   end
+  def delivery_params
+        params.permit(:name, :postal_code, :address, :customer_id)
+    end
 
 end

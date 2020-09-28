@@ -5,19 +5,21 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
   </head>
 
   <body>
-    <header class="navbar navbar-fixed-top navbar-inverse">
+<header class="navbar navbar-fixed-top navbar-inverse" style="background:#000080;">
       <div class="container">
 
         <nav class="nav navbar-nav navbar-left">
-          <span>Nagao Cake</span>
+          <span><%= image_tag "NaganoCakettitle.png" %></span>
         </nav>
         <nav>
-          <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-right" >
              <!--if文でadminのサインイン、customerサインインとアウト時の表示を変更-->
             <% if customer_signed_in? %>
             <li><%= link_to 'マイページ', public_customer_path(current_customer), class: 'glyphicon glyphicon-home home' %></li>
