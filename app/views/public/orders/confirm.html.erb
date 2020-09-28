@@ -16,31 +16,28 @@
       </thead>
 
 
- <% sum_all = 0 %>
-<% @cart_items.each do |cart_item| %>
- <div class="row space-sm">
-    <div class="col-lg-3">
-      <%= link_to public_item_path(cart_item) do %>
-      <%= attachment_image_tag(cart_item.item, :image, :fill, 100, 100) %>
-      <% end %>
-    </div>
-    <div class="col-lg-2">
-      <%= link_to public_item_path(cart_item.item) do %>
-      <%= cart_item.item.name %>
-      <% end %>
-    </div>
-    <div class="col-lg-2">
-      <%= (cart_item.item.price*1.1).floor %>円
-    </div>
-    <div class="col-lg-2">
-      <%= cart_item.amount %>
-    </div>
-    <div class="col-lg-2">
-      <%= sum_item = (cart_item.item.price*1.1).floor.to_i * cart_item.amount%>円
-      <% sum_all += sum_item %>
-
-    </div>
-
+      <tbody>
+        <% sum_all = 0 %>
+        <% @cart_items.each do |cart_item| %>
+        <tr>
+          <td>
+            <%= link_to public_item_path(cart_item) do %>
+            <%= attachment_image_tag(cart_item.item, :image, :fill, 100, 100) %>
+            <% end %>
+            <%= link_to public_item_path(cart_item.item) do %>
+            <%= cart_item.item.name %>
+            <% end %>
+          </td>
+          <td><%= (cart_item.item.price*1.1).floor %></td>
+          <td><%= cart_item.amount %></td>
+          <td>
+            <%= sum_item = (cart_item.item.price*1.1).floor.to_i * cart_item.amount%>円
+            <% sum_all += sum_item %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
   
 <br><br><br>
