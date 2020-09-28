@@ -1,0 +1,15 @@
+<div class="container">
+	<div class="row">	
+		<h2>注文履歴詳細</h2>
+	</div>
+
+	<div class="row">
+		<td><%= link_to admin_customer_path(customer) do %>
+			<%= order.customer.last_name %>
+		    <%= order.customer.first_name %>
+		    <% end %>
+		</td>
+	</div>
+
+
+</div>
