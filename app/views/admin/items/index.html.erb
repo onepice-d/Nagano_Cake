@@ -1,4 +1,5 @@
 <h4><strong>商品一覧</strong></h4>
+<h5><%= link_to "新規登録はこちら", new_admin_item_path %></h5>
   <table class="table table-bordered" style="margin-top: 20px;">
   	<thead class = "thead-dark">
 	  <tr>
@@ -16,7 +17,7 @@
 			<%= item.id %>
 		  </td>
 		  <td>
-			<%= item.name %>
+			<%= link_to item.name, admin_item_path(item) %>
 		  </td>
 		  <td>
 			<%= item.price %>
@@ -25,11 +26,7 @@
 		  	<%= item.genre.name %>
 		  </td>
           <td>
-          	<% if item.is_active == true %>
-          	販売中
-          	<% else %>
-          	売切中
-          	<% end %>
+          	<%= item.is_active ? "販売中" : "売切中" %>
           </td>
       </tr>
 	  </tbody>

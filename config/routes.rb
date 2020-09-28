@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-
+root 'public/homes#top'
 #認証機能に関して
   devise_for :admins, controllers: {
     registrations: 'admins/registrations',
@@ -22,6 +22,8 @@ Rails.application.routes.draw do
       patch "customers/:id/check" => "customers#withdrow"
       #退会ページのルート
     resources :items, only: [:index, :show]
+    get '/orders/thanks' => 'orders#thanks'
+    get '/orders/confirm' => 'orders#confirm'
     resources :orders, only: [:index, :show, :new, :confirm, :thanks, :create] do
           collection do
       post :confirm

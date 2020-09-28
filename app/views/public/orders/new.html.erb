@@ -23,7 +23,7 @@
 <!-- 登録済住所 -->
         <div>
           <label style="margin-left: 60px;"><%= f.radio_button :address_number ,2%> 登録済からの選択</label><br>
-          <div style="margin-left:80px; padding:0 100px;"><%= f.collection_select(:address, current_customer.deliveries, :id, :address)%><br><br>
+          <div style="margin-left:80px; padding:0 100px;"><%= f.collection_select :delivery, @customer.deliveries, :id, :address, { prompt: '選択してください'}%><br><br>
           </div>
 
         </div>
@@ -47,6 +47,7 @@
           </div>
       <!-- end -->
           <% end %>
+
         </div>
       </div>
     </div>
