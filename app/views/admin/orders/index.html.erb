@@ -5,6 +5,7 @@
 	  <tr class="active">
       <th>購入日時</th>
       <th>購入者</th>
+      <th>個数</th>
       <th>注文ステータス</th>
       <th></th>
     </tr>
@@ -13,10 +14,15 @@
       <td>
       	<%= order.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
       <td><%= order.customer.last_name %><%= order.customer.first_name %></td>
+      <td><%= order.total_count %></td>
       <td><%= order.status %></td>
       <td><%= link_to "注文詳細", admin_order_path(order), class:"btn btn-primary" %></td>
     </tr>
     <% end %>
   </table>
 
+  <div class="row text-center">
+    <%= paginate @orders, class: "paginate" %>
+  </div>
 </div>
+

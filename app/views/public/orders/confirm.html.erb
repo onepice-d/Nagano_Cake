@@ -1,18 +1,20 @@
-
-<h1>注文情報確認画面</h1>
-<%= form_with(model: @order, url:{ action: 'create' }, local: true) do |f| %>
-  <div class="d-none d-lg-block space">
-    <div class="row">
-      <div class="col-lg-5"><h4>商品名</h4></div>
-      <div class="col-lg-2"><h4>単価（税込）</h4></div>
-      <div class="col-lg-2"><h4>数量</h4></div>
-      <div class="col-lg-2"><h4>小計</h4></div>
-    </div>
-  </div>
-
- <% sum_all = 0 %>
-<% @cart_items.each do |cart_item| %>
- <div class="row space-sm">
+<div class="col-xs-10">
+  <h1>注文情報確認画面</h1>
+</div>
+<div class="col-xs-7">
+  <%= form_with(model: @order, url:{ action: 'create' }, local: true) do |f| %>
+      <div class="d-none d-lg-block space">
+        <div class="row">
+          <div class="col-lg-5"><h4>商品名</h4></div>
+          <div class="col-lg-2"><h4>単価（税込）</h4></div>
+          <div class="col-lg-2"><h4>数量</h4></div>
+          <div class="col-lg-2"><h4>小計</h4></div>
+        </div>
+      </div>
+</div>
+  <% sum_all = 0 %>
+  <% @cart_items.each do |cart_item| %>
+  <div class="row space-sm">
     <div class="col-lg-3">
       <%= link_to public_item_path(cart_item) do %>
       <%= attachment_image_tag(cart_item.item, :image, :fill, 100, 100) %>
@@ -32,62 +34,64 @@
     <div class="col-lg-2">
       <%= sum_item = (cart_item.item.price*1.1.to_i * cart_item.amount)%>円
       <% sum_all += sum_item %>
-
     </div>
   </div>
-<% end %>
+ <% end %>
+</div>
 
+<div class="col-xs-5">
  <div class="row space">
-    <div class="col-lg-12">
-      <div class="row">
-        <div class="col-lg-3">
-          <strong>送料</strong>
-        </div>
+      <div class="col-lg-12">
+        <div class="row">
+          <div class="col-lg-3">
+            <strong>送料</strong>
+          </div>
 
-        <div class="col-lg-3">
-          800円
+          <div class="col-lg-3">
+            800円
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3">
+            <strong>商品合計</strong>
+          </div>
+          <div class="col-lg-3">
+            <%= sum_all.to_i %>円
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3">
+            <strong>ご請求額</strong>
+          </div>
+          <div class="col-lg-3">
+            <% billling_amount = sum_all + 800.to_i %>
+            <%= billling_amount.to_i %>円
+          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-lg-3">
-          <strong>商品合計</strong>
-        </div>
-        <div class="col-lg-3">
-          <%= sum_all.to_i %>円
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-3">
-          <strong>ご請求額</strong>
-        </div>
-        <div class="col-lg-3">
-          <% billling_amount = sum_all + 800.to_i %>
-          <%= billling_amount.to_i %>円
-        </div>
+ </div>
+</div>
 
-      </div>
-    </div>
-  </div>
+
 
   <div class="row space-sm">
     <div class="col-lg-2">
-
-支払い方法
+<h4>支払い方法</h4>
     </div>
     <div class="col-lg-4">
     	<%= f.hidden_field :payment_method, :value=>@order.payment_method%>
-		<%= @order.payment_method %>
+		<h5><%= @order.payment_method %></h5>
     </div>
   </div>
 
   <div class="row space-sm">
     <div class="col-lg-2">
-      <h3>お届け先</h3>
+      <h4>お届け先</h4>
     </div>
     <div class="col-lg-4">
-      <%= @order.postal_code %>
-      <%= @order.address %>
-      <%= @order.name %>
+      <h5><p>〒<%= @order.postal_code %></p></h5>
+      <h5><p><%= @order.address %></p></h5>
+      <h5><p><%= @order.name %></p></h5>
     </div>
   </div>
 
@@ -95,15 +99,13 @@
   <%= f.hidden_field :postal_code, :value =>@order.postal_code %>
   <%= f.hidden_field :address, :value => @order.address%>
   <%= f.hidden_field :address, :value => @order.address %>
-</div>
 
 
 
 
 <div class="row space">
   <div class="col-lg-2 offset-lg-5">
-<%= f.submit "購入を確定する" %>
+<%= f.submit "購入を確定する", class: "btn btn-primary text-cenrer" %>
 </div>
 </div>
 <% end %>
-
