@@ -10,7 +10,7 @@
         </tr>
         <tr>
           <td>配送先</td>
-          <td>〒<%= @order.postal_code %><br><%= @order.address %><br><%= @order.name %></td>
+          <td>〒<%= @order.postal_code %><br><%= @order.address %><br><%= @order.customer.last_name %><%= @order.customer.first_name %><br></td>
         </tr>
         <tr>
           <td>支払方法</td>
@@ -30,13 +30,14 @@
             <th>個数</th>
             <th>小計</th>
           </tr>
+          <% sum_all = 0 %>
           <% @order.order_items.each do |order_item| %>
           <tr>
             <td><%= order_item.item.name %></td>
-            <td><%= order_item.price %></td>
+            <td><%= (order_item.price*1.1).floor %></td>
             <td><%= order_item.amount %></td>
-            <td><%= (order_item.price*order_item.amount) %>
-              <% @total = (order_item.price*order_item.amount) %>
+            <td><%= sub_total = (order_item.price*order_item.amount*1.1).floor %>
+              <% sum_all += sub_total %>
             </td>
           </tr>
           <% end %>
@@ -48,7 +49,7 @@
           <table class="table table-bordered">
           <tr>
             <td>商品合計</td>
-            <th><%= @total %></th>
+            <th><%= sum_all %></th>
           </tr>
           <tr>
             <td>配送料</td>
@@ -56,7 +57,7 @@
           </tr>
           <tr>
             <td>ご請求額</td>
-            <th><%= @total + 800 %></th>
+            <th><%= sum_all+ 800 %></th>
           </tr>
           </table>
             </div>
