@@ -46,12 +46,12 @@
 			</tr>
 		</table>
 		
-		<%= link_to  edit_admin_customer_path, class:"btn btn-primary" do %>
+		<%= link_to  edit_admin_customer_path(@customer), class:"btn btn-primary" do %>
 		  <i class="fa fa-arrow-left"></i>
 		  <span>編集する</span>
 		<% end %>
 		
-		<%= link_to   admin_order_items_path, class:"btn btn-primary"  do %>
+		<%= link_to   admin_order_path(@customer.id), class:"btn btn-primary"  do %>
 		  <i class="fa fa-arrow-left"></i>
 		  <span>注文履歴一覧を見る</span>
 		<% end %>
