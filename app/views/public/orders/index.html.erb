@@ -1,48 +1,36 @@
-
-<div class="col-lg-10 offset-1 space">
-
-  <div class="row">
-    <h2>注文履歴一覧</h2>
-  </div>
-
-  <div class="d-none d-lg-block space">
-    <div class="row">
-      <div class="col-lg-2">注文日</div>
-      <div class="col-lg-3">配送先</div>
-      <div class="col-lg-2">注文商品</div>
-      <div class="col-lg-2">支払金額</div>
-      <div class="col-lg-1">ステータス</div>
-      <div class="col-lg-2">注文詳細</div>
-    </div>
-  </div>
+<div class="container ">
+  <h2><i class="fas fa-file-invoice">
+  </i>注文履歴一覧</h2>
+    <table class="table-bordered">
+    <tr>
+      <th>注文日</th>
+        <th>配送先</th>
+        <th>注文商品</th>
+        <th>支払金額</th>
+        <th>ステータス</th>
+        <th>注文詳細</th>
+      </tr>
 
   <% @orders.each do |order| %>
-  <div class="row space-sm">
-    <div class="col-lg-2">
-      <%= order.created_at.strftime('%Y/%m/%d') %>
-    </div>
-    <div class="col-lg-3">
-      <div class="row">
-        <%= order.address %>
-      </div>
-    </div>
-    <div class="col-lg-2">
-      <% sum_all = 0 %>
-      <% order.order_items.each do |order_item| %>
-      <%= order_item.item.name %><br>
-      
-      
-      <% end %>
-    </div>
-    <div class="col-lg-2">
-      <%= sum_all += 800 %>円
-    </div>
-    <div class="col-lg-1">
-      <%= order.status %>
-    </div>
-    <div class="col-lg-2">
-      <%= link_to '表示する', public_order_path(order), class: "btn btn-sm btn-danger" %>
-    </div>
-  </div>
-  <% end %>
+  
+
+     <tr>
+        <td><%= order.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+        <td><%= order.postal_code %><br>
+          <%= order.address %><br>
+            <%= order.customer.last_name %><%= order.customer.first_name %><br>
+          </td>
+        <td><% order.order_items.each do |order_item| %>
+          <%= order_item.item.name %>
+        </td>
+        <td><%= (order_item.price*order_item.amount) %></td>
+        <% end %>
+        <td><%= order.status %></td>
+        <td><%= link_to "表示する", public_order_path(order) %></td>
+      </tr>
+    <% end %>
+    </table>
+
+
+    
 
