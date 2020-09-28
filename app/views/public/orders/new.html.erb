@@ -16,14 +16,14 @@
 
 <!-- 自身の住所  -->
 
-        <label style="margin-left: 60px;"><%= f.radio_button :address_number,1,checked: "checked" %> ご自身の住所 </label><br>
+        <label style="margin-left: 60px;"><%= f.radio_button :add,1,checked: "checked" %> ご自身の住所 </label><br>
         <div style="margin-left:70px;"><%= current_customer.postal_code %> <%= current_customer.address %><br><%= current_customer.last_name %><%= current_customer.first_name %></div><br><br>
 <!-- end -->
 
 <!-- 登録済住所 -->
         <div>
-          <label style="margin-left: 60px;"><%= f.radio_button :address_number ,2%> 登録済からの選択</label><br>
-          <div style="margin-left:80px; padding:0 100px;"><%= f.collection_select(:address, current_customer.deliveries, :id, :address)%><br><br>
+          <label style="margin-left: 60px;"><%= f.radio_button :add,2%> 登録済からの選択</label><br>
+          <div style="margin-left:80px; padding:0 100px;"><%= f.collection_select(:delivery, current_customer.deliveries, :id, :address)%><br><br>
           </div>
 
         </div>
@@ -32,7 +32,7 @@
 
 
 <!-- 新規届け先 -->
-        <label style="margin-left: 60px;"><%= f.radio_button :address_number,3 %> 新しいお届け先</label><br>
+        <label style="margin-left: 60px;"><%= f.radio_button :add,3 %> 新しいお届け先</label><br>
         <div style="display: flex; margin-left:15% ;">
           <div  style="display: flex flex-direction: column;  flex-wrap: wrap;  width: 60px;">
             <%= f.label :郵便番号, style: "width: 100px;"%><br><br>
