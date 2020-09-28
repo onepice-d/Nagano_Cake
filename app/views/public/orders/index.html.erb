@@ -1,36 +1,42 @@
 <div class="container ">
-  <h2><i class="fas fa-file-invoice">
-  </i>注文履歴一覧</h2>
-    <table class="table-bordered" style="margin-top: 20px;">
+  <div class="row">
+    <h2><i class="fas fa-file-invoice">
+      </i>注文履歴一覧</h2>
+  </div>
+
+   <div class="row">
+     <table class="table table-striped">
       <thead>
-    <tr>
-      <th>注文日</th>
-        <th>配送先</th>
-        <th>注文商品</th>
-        <th>支払金額</th>
-        <th>ステータス</th>
-        <th>注文詳細</th>
-        <th></th>
-      </tr>
+        <tr>
+          <th>注文日</th>
+          <th>配送先</th>
+          <th>注文商品</th>
+          <th>支払金額</th>
+          <th>ステータス</th>
+          <th>注文詳細</th>
+        </tr>
     </thead>
 
-  <% @orders.each do |order| %>
     <tbody>
-     <tr>
-        <td><%= order.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
-        <td><%= order.postal_code %><br>
-          <%= order.address %><br>
+      <% sum_all = 0 %>
+      <% @orders.each do |order| %>
+        <tr>
+          <td><%= order.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+            <td><%= order.postal_code %><br>
+            <%= order.address %><br>
             <%= order.customer.last_name %><%= order.customer.first_name %><br>
-          </td>
-        <td><% order.order_items.each do |order_item| %>
-          <%= order_item.item.name %>
-        </td>
-        <td><%= (order_item.price*order_item.amount) %></td>
-        <% end %>
-        <td><%= order.status %></td>
-        <td><%= link_to "表示する", public_order_path(order) %></td>
-      </tr>
+            </td>
+            <td><% order.order_items.each do |order_item| %>
+                  <%= order_item.item.name %>
+           </td>
+           <% sub_total = (order_item.price*1.1).floor.to_i * order_item.amount %>
+               <% sum_all += sub_total.to_i %>
+                <% end %>
+            <td><%= sum_all += 800 %>円</td>
+            <td><%= order.status %></td>
+           <td><%= link_to "表示する", public_order_path(order) %></td>
+           </tr>
+         <% end %>
       </tbody>
-    <% end %>
 </table>
 
