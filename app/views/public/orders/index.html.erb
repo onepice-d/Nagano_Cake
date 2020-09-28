@@ -32,7 +32,7 @@
       <% sum_all = 0 %>
       <% order.order_items.each do |order_item| %>
       <%= order_item.item.name %><br>
-      <% sub_total = price_include_tax(order_item.order_price).to_i * order_item.quantity %>
+      <% sub_total = price_include_tax(order_item.order_price).to_i * order_item.amount %>
       <% sum_all += sub_total.to_i %>
       <% end %>
     </div>

@@ -80,7 +80,6 @@ class Public::OrdersController < ApplicationController
   end
 
 
-
 	def thanks
 	end
 
@@ -95,6 +94,7 @@ class Public::OrdersController < ApplicationController
       flash[:alert] = "アクセスに失敗しました。"
     end
   end
+
   private
   def set_customer
     @customer = current_customer
